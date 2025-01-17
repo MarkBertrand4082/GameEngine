@@ -129,13 +129,17 @@
   <ItemGroup>
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="CommandDemo.cpp" />
+    <ClCompile Include="CommandMoveUnit.cpp" />
     <ClCompile Include="GameEngineClassProject.cpp" />
     <ClCompile Include="NoCommandDemo.cpp" />
+    <ClCompile Include="Unit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandDemo.h" />
+    <ClInclude Include="CommandMoveUnit.h" />
     <ClInclude Include="NoCommandDemo.h" />
+    <ClInclude Include="Unit.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

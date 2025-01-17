@@ -6,9 +6,13 @@ int main()
 {
     CommandDemo* cd = new CommandDemo();
     std::cout << "\nCommands: \n";
-    cd->HandleInput("X");
-    cd->HandleInput("Y");
+    cd->HandleInput("W");
     cd->HandleInput("A");
-    cd->HandleInput("B");
+    cd->HandleInput("S");
+    cd->HandleInput("D");
+    cd->Undo();
+    cd->Undo();
+    cd->Undo();
+    cd->Undo();
     delete cd;
 }
