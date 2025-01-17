@@ -1,18 +1,24 @@
 #include <iostream>
 
-#include "CommandDemo.h"
+#include "Unit.h"
+#include "Physics.h"
+#include "Achievements.h"
 
 int main()
 {
-    CommandDemo* cd = new CommandDemo();
-    std::cout << "\nCommands: \n";
-    cd->HandleInput("W");
-    cd->HandleInput("A");
-    cd->HandleInput("S");
-    cd->HandleInput("D");
-    cd->Undo();
-    cd->Undo();
-    cd->Undo();
-    cd->Undo();
-    delete cd;
+    Achievements* achievements = new Achievements();
+    Physics* physics = new Physics();
+    Unit* unit = new Unit();
+
+    physics->GetEventFalling()->AddObserver(achievements);
+    unit->MoveTo(0, 1);
+    physics->Update(unit);
+    unit->MoveTo(0, 0);
+    physics->Update(unit);
+    unit->MoveTo(0, -1);
+    physics->Update(unit);
+
+    delete unit;
+    delete physics;
+    delete achievements;
 }
