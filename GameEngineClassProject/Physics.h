@@ -1,9 +1,10 @@
 #pragma once
 #include "Subject.h"
+#include "Singleton.h"
 
 class Unit;
 
-class Physics
+class Physics :public Singleton<Physics>
 {
 public:
 	Physics();

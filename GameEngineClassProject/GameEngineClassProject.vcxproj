@@ -135,6 +135,7 @@
     <ClCompile Include="NoCommandDemo.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="Singleton.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="Unit.cpp" />
   </ItemGroup>
@@ -146,6 +147,7 @@
     <ClInclude Include="NoCommandDemo.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Physics.h" />
+    <ClInclude Include="Singleton.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="Unit.h" />
   </ItemGroup>
