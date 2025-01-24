@@ -131,6 +131,7 @@
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="CommandDemo.cpp" />
     <ClCompile Include="CommandMoveUnit.cpp" />
+    <ClCompile Include="FileController.cpp" />
     <ClCompile Include="GameEngineClassProject.cpp" />
     <ClCompile Include="NoCommandDemo.cpp" />
     <ClCompile Include="Observer.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandDemo.h" />
     <ClInclude Include="CommandMoveUnit.h" />
+    <ClInclude Include="FileController.h" />
     <ClInclude Include="NoCommandDemo.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Physics.h" />

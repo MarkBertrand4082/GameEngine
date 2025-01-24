@@ -51,6 +51,9 @@
     <ClCompile Include="Unit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FileController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NoCommandDemo.h">
@@ -87,6 +90,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StandardIncludes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
