@@ -36,6 +36,12 @@ void StackAllocator::Mark()
 	m_marker = m_stackPosition;
 }
 
+void StackAllocator::FreeToMarker()
+{
+	m_stackPosition = m_marker;
+	*m_stackPosition = 0;
+}
+
 void StackAllocator::ClearMemory()
 {
 	if (m_stackStart != nullptr)

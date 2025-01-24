@@ -14,7 +14,7 @@ int main()
     cout << file1 << endl;
 
     int fs2 = fc->GetFileSize("File2.txt");
-    unsigned char* file2 = sa->GetMemory(fs2;
+    unsigned char* file2 = sa->GetMemory(fs2);
     fc->ReadFile("File2.txt", file2, fs2);
     sa->Mark();
     cout << file2 << endl;
