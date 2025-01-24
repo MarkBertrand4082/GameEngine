@@ -1,6 +1,7 @@
-#pragma once
-#include <iostream>
-#include <vector>
+#ifndef OBJECTPOOL_H
+#define OBJECTPOOL_H
+
+#include "StandardIncludes.h"
 
 template <class T>
 class ObjectPool
@@ -10,6 +11,7 @@ public:
 	virtual ~ObjectPool() {
 		for (unsigned int count = 0; count < m_all.size(); count++)
 		{
+			cout << "Deleting pool object" << endl;
 			delete m_all[count];
 		}
 		m_all.clear();
@@ -19,14 +21,14 @@ public:
 	T* GetResource() {
 		if (m_available.empty())
 		{
-			std::cout << "Creating new." << std::endl;
+			cout << "Creating new pool object." << endl;
 			T* resource = new T();
 			m_all.push_back(resource);
 			return resource;
 		}
 		else
 		{
-			std::cout << "Resuing existing." << std::endl;
+			cout << "Resuing existing pool object." << endl;
 			T* resource = m_available[0];
 			m_available.erase(m_available.begin());
 			return resource;
@@ -43,3 +45,4 @@ private:
 	std::vector<T*> m_all;
 };
 
+#endif

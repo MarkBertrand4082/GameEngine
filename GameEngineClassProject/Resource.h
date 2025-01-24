@@ -1,15 +1,21 @@
-#pragma once
-class Resource
+#ifndef RESOURCE_H
+#define RESOURCE_H
+
+#include "Serializable.h"
+class Resource : public Serializable
 {
 public:
-	Resource() { m_value = 0; }
+	Resource();
+	virtual ~Resource();
 
-	int GetValue() { return m_value; }
-	void SetValue(int _number) { m_value = _number; }
-
-	void Reset() { m_value = 0; }
+	virtual void Serialize(ostream& _stream);
+	virtual void Deserialize(istream& _stream);
+	void AssignNonDefaultValues();
+	void ToString();
 
 private:
-	int m_value;
+	int m_val1;
+	double m_val2;
+	char m_val3;
 };
-
+#endif

@@ -134,9 +134,10 @@
     <ClCompile Include="FileController.cpp" />
     <ClCompile Include="GameEngineClassProject.cpp" />
     <ClCompile Include="NoCommandDemo.cpp" />
+    <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="Physics.cpp" />
-    <ClCompile Include="Singleton.cpp" />
+    <ClCompile Include="Resource.cpp" />
     <ClCompile Include="StackAllocator.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="ThreadTest.cpp" />
@@ -149,8 +150,11 @@
     <ClInclude Include="CommandMoveUnit.h" />
     <ClInclude Include="FileController.h" />
     <ClInclude Include="NoCommandDemo.h" />
+    <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Physics.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="Serializable.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="StackAllocator.h" />
     <ClInclude Include="StandardIncludes.h" />
