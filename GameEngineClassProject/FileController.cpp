@@ -3,6 +3,8 @@
 FileController::FileController()
 {
 	m_handle = nullptr;
+	m_readSuccess = false;
+	m_thread = {};
 }
 
 FileController::~FileController()
@@ -34,14 +36,23 @@ int FileController::GetFileSize(string _filePath)
 bool FileController::ReadFile(string _filePath, unsigned char* _buffer, unsigned int _bufferSize)
 {
 	m_handle = nullptr;
+	m_readSuccess = false;
 	M_ASSERT(fopen_s(&m_handle, _filePath.c_str(), "rb") == 0, "Could not open file.");
 	if (m_handle != nullptr)
 	{
 		M_ASSERT(fread(_buffer, 1, _bufferSize, m_handle) == _bufferSize, "All bytes not read from file.");
 		M_ASSERT(ferror(m_handle) == 0, "Error reading from file");
 		M_ASSERT(fclose(m_handle) == 0, "Could not close file.");
-		return true;
+		m_readSuccess = true;
 	}
+	if (m_thread.joinable())
+	{
+		m_thread.detach();
+	}
+	return m_readSuccess;
+}
 
-	return false;
+void FileController::ReadFileAsync(string _filePath, unsigned char* _buffer, unsigned int _bufferSize)
+{
+	m_thread = thread(&FileController::ReadFile, this, _filePath, _buffer, _bufferSize);
 }
