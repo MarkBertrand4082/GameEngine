@@ -1,20 +1,26 @@
-#pragma once
-class Unit
+#ifndef UNIT_H
+#define UNIT_H
+
+#include "Resource.h"
+#include "SoundEffect.h"
+
+class Unit : public Resource
 {
 public:
-	Unit() { m_x = 0; m_y = 0; m_lastX = 0; m_lastY = 0; }
+	Unit();
+	virtual ~Unit();
 
-	int GetX() { return m_x; }
-	int GetY() { return m_y; }
-	int GetLastX() { return m_lastX; }
-	int GetLastY() { return m_lastY; }
+	void Serialize(std::ostream& _stream) override;
+	void Deserialize(std::istream& _stream) override;
+	void ToString() override;
+	void AssignNonDefaultValues() override;
 
-	void MoveTo(int _x, int _y);
+
+	//Member
+	static ObjectPool<Unit>* Pool;
 
 private:
-	int m_x;
-	int m_y;
-	int m_lastX;
-	int m_lastY;
+	SoundEffect* m_soundEffect;
 };
 
+#endif

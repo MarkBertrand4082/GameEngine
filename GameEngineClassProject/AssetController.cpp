@@ -16,11 +16,20 @@ void AssetController::Initialize(int _stackSize)
 
 AssetController::~AssetController()
 {
+	Clear();
+}
+
+void AssetController::Clear()
+{
 	for (auto const& x : m_assets)
 	{
 		Asset::Pool->ReleaseResource(x.second);
 	}
-	delete Asset::Pool;
+	if (Asset::Pool != nullptr)
+	{
+		delete Asset::Pool;
+		Asset::Pool = nullptr;
+	}
 	Stack->ClearMemory();
 	m_assets.clear();
 }

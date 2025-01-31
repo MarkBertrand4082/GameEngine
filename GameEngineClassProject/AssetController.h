@@ -13,6 +13,7 @@ public:
 
 	//Methods
 	void Initialize(int _stackSize);
+	void Clear();
 	Asset* GetAsset(string _guid);
 
 	//Members

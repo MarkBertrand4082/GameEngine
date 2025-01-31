@@ -1,12 +1,38 @@
-#include <iostream>
-
 #include "Unit.h"
 
-void Unit::MoveTo(int _x, int _y) {
+ObjectPool<Unit>* Unit::Pool = nullptr;
 
-	m_lastX = m_x;
-	m_lastY = m_y;
-	m_x = _x;
-	m_y = _y;
-	std::cout << "Move To x:" << m_x << " y:" << m_y << "\n";
-};
+Unit::Unit()
+{
+	m_soundEffect = nullptr;
+}
+
+Unit::~Unit()
+{
+}
+
+void Unit::AssignNonDefaultValues()
+{
+	m_soundEffect = SoundEffect::Pool->GetResource();
+	m_soundEffect->AssignNonDefaultValues();
+	Resource::AssignNonDefaultValues();
+}
+
+void Unit::Serialize(std::ostream & _stream)
+{
+	SerializePointer(_stream, m_soundEffect);
+	Resource::Serialize(_stream);
+}
+
+void Unit::Deserialize(std::istream& _stream)
+{
+	DeserializePointer(_stream, m_soundEffect);
+	Resource::Deserialize(_stream);
+}
+
+void Unit::ToString()
+{
+	cout << "UNIT" << endl;
+	m_soundEffect->ToString();
+	Resource::ToString();
+}
