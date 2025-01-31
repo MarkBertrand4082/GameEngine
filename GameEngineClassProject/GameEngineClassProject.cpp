@@ -1,9 +1,25 @@
-#include "Asset.h"
+#include "Resource.h"
 #include "AssetController.h"
 
 int main()
 {
     AssetController::Instance().Initialize(10000000);
-    Asset* asset = AssetController::Instance().GetAsset("emoji.jpg");
-    cout << "Bytes used by image.bpm: " << AssetController::Stack->GetBytesUsed() << endl;
+    Resource::Pool = new ObjectPool<Resource>();
+    Resource* r1 = Resource::Pool->GetResource();
+    r1->AssignNonDefaultValues();
+
+    ofstream writeStream("resource.bin", ios::out | ios::binary);
+    r1->Serialize(writeStream);
+    writeStream.close();
+    cout << "r1 Values: ";
+    r1->ToString();
+
+    Resource* r2 = Resource::Pool->GetResource();
+    ifstream readStream("resource.bin", ios::in | ios::binary);
+    r2->Deserialize(readStream);
+    readStream.close();
+    cout << "r2 Values: ";
+    r2->ToString();
+
+    delete Resource::Pool;
 }

@@ -136,7 +136,6 @@
     <ClCompile Include="FileController.cpp" />
     <ClCompile Include="GameEngineClassProject.cpp" />
     <ClCompile Include="NoCommandDemo.cpp" />
-    <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Resource.cpp" />
