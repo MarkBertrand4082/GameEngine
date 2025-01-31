@@ -127,7 +127,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Achievements.cpp" />
     <ClCompile Include="Asset.cpp" />
     <ClCompile Include="AssetController.cpp" />
     <ClCompile Include="Command.cpp" />
@@ -147,7 +146,6 @@
     <ClCompile Include="Unit.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Achievements.h" />
     <ClInclude Include="Asset.h" />
     <ClInclude Include="AssetController.h" />
     <ClInclude Include="Command.h" />

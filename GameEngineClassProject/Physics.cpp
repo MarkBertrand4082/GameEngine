@@ -13,8 +13,5 @@ Physics::~Physics()
 
 void Physics::Update(Unit* _unit)
 {
-	if (_unit->GetLastY() > _unit->GetY())
-	{
-		m_falling->Notify(_unit, "UnitFalling");
-	}
+	
 }

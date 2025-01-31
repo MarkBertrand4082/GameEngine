@@ -16,14 +16,14 @@ public:
 
 	virtual void Execute()
 	{
-		m_xBefore = m_unit->GetX();
-		m_yBefore = m_unit->GetY();	
-		m_unit->MoveTo(m_x, m_y);
+		//m_xBefore = m_unit->GetX();
+		//m_yBefore = m_unit->GetY();	
+		//m_unit->MoveTo(m_x, m_y);
 	}
 
 	virtual void Undo()
 	{
-		m_unit->MoveTo(m_xBefore, m_yBefore);
+		//m_unit->MoveTo(m_xBefore, m_yBefore);
 	}
 
 private:
