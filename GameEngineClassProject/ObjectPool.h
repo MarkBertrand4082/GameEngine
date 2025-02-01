@@ -21,14 +21,14 @@ public:
 	T* GetResource() {
 		if (m_available.empty())
 		{
-			cout << "Creating new pool object: " << typeid(T).name() endl;
+			cout << "Creating new pool object: " << typeid(T).name() << endl;
 			T* resource = new T();
 			m_all.push_back(resource);
 			return resource;
 		}
 		else
 		{
-			cout << "Resuing existing pool object: " << typeid(T).name() endl;
+			cout << "Resuing existing pool object: " << typeid(T).name() << endl;
 			T* resource = m_available[0];
 			m_available.erase(m_available.begin());
 			return resource;
