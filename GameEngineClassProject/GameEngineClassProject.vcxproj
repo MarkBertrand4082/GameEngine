@@ -150,6 +150,8 @@
     <ClCompile Include="SoundEffect.cpp" />
     <ClCompile Include="StackAllocator.cpp" />
     <ClCompile Include="Subject.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TGAReader.cpp" />
     <ClCompile Include="ThreadTest.cpp" />
     <ClCompile Include="Unit.cpp" />
   </ItemGroup>
@@ -174,6 +176,8 @@
     <ClInclude Include="StackAllocator.h" />
     <ClInclude Include="StandardIncludes.h" />
     <ClInclude Include="Subject.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="TGAReader.h" />
     <ClInclude Include="ThreadTest.h" />
     <ClInclude Include="Unit.h" />
   </ItemGroup>
