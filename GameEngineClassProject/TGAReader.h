@@ -36,7 +36,7 @@ class TGAReader
 {
 public:
 	TGAReader();
-	virtual ~TGAReader();
+	virtual ~TGAReader() {};
 
 	void ProcessAsset(Asset* _rawTGA, ImageInfo* _imageInfo);
 	Asset* LoadTGAFromFile(string _file, ImageInfo* _imageInfo);
