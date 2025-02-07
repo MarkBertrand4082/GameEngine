@@ -1,6 +1,8 @@
 #ifndef STANDARD_INCLUDES_H
 #define STANDARD_INCLUDES_H
 
+#define SDL_MAIN_HANDLED
+
 #include <string>
 #include <vector>
 #include <iostream>
@@ -9,6 +11,7 @@
 #include <stdio.h>
 #include <thread>
 #include <map>
+#include <SDL.h>
 
 #include "Singleton.h"
 
