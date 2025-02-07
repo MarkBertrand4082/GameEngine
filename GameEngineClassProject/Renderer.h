@@ -25,11 +25,17 @@ public:
 	Renderer();
 	virtual ~Renderer();
 
-	SDL_Window* GetWindow() { return m_window;  }
+	SDL_Window* GetWindow() { return m_window; }
 	SDL_Renderer* GetRenderer() { return m_renderer; }
+
+	void Initialize(int _xResolution, int _yResolution);
+	void SetDrawColor(Color _color);
+	void ClearScreen();
+	void Shutdown();
 
 private:
 	SDL_Window* m_window;
-	SDL_Renderer
-
+	SDL_Renderer* m_renderer;
+	SDL_Rect m_destRect;
+};
 #endif
