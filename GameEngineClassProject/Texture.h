@@ -6,7 +6,7 @@
 
 class Asset;
 
-class Texture : Resource
+class Texture : public Resource
 {
 public:
 	Texture();
