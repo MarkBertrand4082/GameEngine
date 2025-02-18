@@ -156,6 +156,8 @@ copy /Y "$(SolutionDir)External\SDL2_ttf-2.24.0\lib\x64\SDL2_ttf.dll" "$(TargetD
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TGAReader.cpp" />
     <ClCompile Include="ThreadTest.cpp" />
+    <ClCompile Include="Timing.cpp" />
+    <ClCompile Include="TTFont.cpp" />
     <ClCompile Include="Unit.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -185,6 +187,8 @@ copy /Y "$(SolutionDir)External\SDL2_ttf-2.24.0\lib\x64\SDL2_ttf.dll" "$(TargetD
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TGAReader.h" />
     <ClInclude Include="ThreadTest.h" />
+    <ClInclude Include="Timing.h" />
+    <ClInclude Include="TTFont.h" />
     <ClInclude Include="Unit.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

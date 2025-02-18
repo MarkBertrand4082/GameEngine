@@ -30,14 +30,14 @@ void SpriteSheet::AddAnimation(AnimationNames _name, short _clipStart, short _cl
 	m_animations[_name] = anim;
 }
 
-Rect SpriteSheet::Update(AnimationNames _name)
+Rect SpriteSheet::Update(AnimationNames _name, float _deltaTime)
 {
 	short s = m_animations[_name]->GetClipCurrent();
 	short posX = s % m_columns * m_clipSizeX;
-	short posY = s % m_columns * m_clipSizeY;
+	short posY = s / m_columns * m_clipSizeY;
 	Rect r = Rect(posX, posY, posX + m_clipSizeX, posY + m_clipSizeY);
 
-	m_animations[_name]->Update();
+	m_animations[_name]->Update(_deltaTime);
 
 	return r;
 }
@@ -89,4 +89,13 @@ void SpriteSheet::ToString()
 	cout << "ClipSizeX: " << (int)m_clipSizeX;
 	cout << "ClipSizeY: " << (int)m_clipSizeY << endl;
 	Resource::ToString();
+}
+
+int SpriteSheet::GetCurrentClip(AnimationNames _name)
+{
+	if (m_animations.count(_name) <= 0)
+	{
+		return 0;
+	}
+	return m_animations[_name]->GetClipCurrent();
 }
