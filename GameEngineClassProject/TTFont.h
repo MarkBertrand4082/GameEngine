@@ -9,7 +9,7 @@ class TTFont
 {
 public:
 	TTFont();
-	virtual ~TTFont() {}
+	virtual ~TTFont();
 
 	void Initialize(int _pointSize);
 	void Write(SDL_Renderer* _renderer, const char* _text, SDL_Color _color, SDL_Point _pos);

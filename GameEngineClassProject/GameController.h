@@ -25,6 +25,8 @@ private:
 	bool m_quit;
 	InputController* m_input;
 	string m_text;
+	string m_smPos;
+	Point m_mPos;
 };
 
 #endif

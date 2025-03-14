@@ -25,6 +25,10 @@ struct Color
 
 struct Point
 {
+	Point()
+	{
+	}
+
 	Point(unsigned int _x, unsigned int _y)
 	{
 		X = _x;
