@@ -3,7 +3,11 @@
 
 #define SDL_MAIN_HANDLED
 
+#define NATIVE_XRES 1920
+#define NATIVE_YRES 1080
+
 #include <string>
+#include <sstream>
 #include <vector>
 #include <iostream>
 #include <fstream>
