@@ -5,6 +5,7 @@
 
 class Keyboard;
 class Mouse;
+class Controller;
 
 class InputController : public Singleton<InputController>
 {
@@ -14,10 +15,12 @@ public:
 
 	Keyboard* KB() { return m_keyboard; }
 	Mouse* MS() { return m_mouse; }
+	Controller* CT() { return m_controller; }
 
 private:
 	Keyboard* m_keyboard;
 	Mouse* m_mouse;
+	Controller* m_controller;
 };
 
 #endif

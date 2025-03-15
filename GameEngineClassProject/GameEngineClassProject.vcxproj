@@ -139,6 +139,7 @@ copy /Y "$(SolutionDir)External\SDL2_ttf-2.24.0\lib\x64\SDL2_ttf.dll" "$(TargetD
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="CommandDemo.cpp" />
     <ClCompile Include="CommandMoveUnit.cpp" />
+    <ClCompile Include="Controller.cpp" />
     <ClCompile Include="FileController.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="GameEngineClassProject.cpp" />
@@ -171,6 +172,7 @@ copy /Y "$(SolutionDir)External\SDL2_ttf-2.24.0\lib\x64\SDL2_ttf.dll" "$(TargetD
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandDemo.h" />
     <ClInclude Include="CommandMoveUnit.h" />
+    <ClInclude Include="Controller.h" />
     <ClInclude Include="FileController.h" />
     <ClInclude Include="GameController.h" />
     <ClInclude Include="InputController.h" />
