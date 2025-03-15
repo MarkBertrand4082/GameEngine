@@ -59,7 +59,7 @@ void GameController::HandleInput(SDL_Event _event)
 		m_smPos = "Mouse Position [" + to_string(m_mPos.X) + ";"
 			+ to_string(m_mPos.Y) + "]";
 	}
-	else if ((m_input->CT()->Added(_event)) || (m_input->CT()->Removed(_event)))
+	else if ((m_input->CT()->Added(_event)) || (m_input->CT()->Removed(_event)) || (m_input->CT()->ProcessButtons(m_sdlEvent)))
 	{
 		m_ctInfo = m_input->CT()->ToString();
 	}

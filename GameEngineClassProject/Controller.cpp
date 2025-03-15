@@ -73,7 +73,42 @@ string Controller::ToString()
 	{
 		cc++;
 		s += to_string(cc) + " - " + c.Name + ": ";
+		s += c.ToString();
 	}
 	return s;
 }
 
+bool Controller::ProcessButtons(SDL_Event _event)
+{
+	if (_event.type == SDL_CONTROLLERBUTTONDOWN)
+	{
+		for (unsigned int count = 0; count < m_controllers.size(); count++)
+		{
+			if (m_controllers[count].ID != _event.cdevice.which) continue;
+			auto v = m_controllers[count].Buttons;
+			if (std::find(v.begin(), v.end(), _event.cbutton.button) == v.end())
+			{
+				m_controllers[count].Buttons.push_back(SDL_GameControllerButton(_event.cbutton.button));
+			}
+			break;
+		}
+		return true;
+	}
+	else if (_event.type == SDL_CONTROLLERBUTTONUP)
+	{
+		for (unsigned int count = 0; count < m_controllers.size(); count++)
+		{
+			vector<SDL_GameControllerButton>* v = &m_controllers[count].Buttons;
+			for (unsigned int button = 0; button < v->size(); button++)
+			{
+				if ((*v)[button] == _event.cbutton.button)
+				{
+					v->erase(v->begin() + button);
+					break;
+				}
+			}
+		}
+		return true;
+	}
+	return false;
+}
