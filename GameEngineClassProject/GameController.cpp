@@ -5,6 +5,9 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Controller.h"
+#include "AudioController.h"
+#include "SoundEffect.h"
+#include "Song.h"
 
 
 GameController::GameController()
@@ -14,10 +17,10 @@ GameController::GameController()
 	m_fArial20 = nullptr;
 	m_quit = false;
 	m_input = nullptr;
-	m_text = "";
-	m_smPos = "";
-	m_mPos = { };
-	m_ctInfo = "";
+	m_audio = nullptr;
+	m_effect = nullptr;
+	m_song = nullptr;
+
 }
 
 GameController::~GameController()
@@ -27,11 +30,15 @@ GameController::~GameController()
 
 void GameController::Initialize()
 {
+	AssetController::Instance().Initialize(10000000);
 	m_renderer = &Renderer::Instance();
 	m_renderer->Initialize();
 	m_input = &InputController::Instance();
 	m_fArial20 = new TTFont();
 	m_fArial20->Initialize(20);
+	m_audio = &AudioController::Instance();
+	m_effect = m_audio->LoadEffect("../Assets/Audio/Effects/Whoosh.wav");
+	m_song = m_audio->LoadSong("../Assets/Audio/Music/Track1.mp3");
 }
 
 void GameController::ShutDown()
@@ -46,22 +53,25 @@ void GameController::HandleInput(SDL_Event _event)
 	{
 		m_quit = true;
 	}
-	else if ((temp = m_input->KB()->TextInput(_event)) != "")
+	else if (m_input->KB()->KeyUp(_event, SDLK_p))
 	{
-		m_text += temp;
+		m_audio->Play(m_effect);
 	}
-	else if (m_input->KB()->KeyUp(_event, SDLK_RETURN))
+	else if (m_input->KB()->KeyUp(_event, SDLK_a))
 	{
-		m_text = "";
+		m_audio->Play(m_song);
 	}
-	else if (m_input->MS()->Moved(_event, m_mPos))
+	else if (m_input->KB()->KeyUp(_event, SDLK_s))
 	{
-		m_smPos = "Mouse Position [" + to_string(m_mPos.X) + ";"
-			+ to_string(m_mPos.Y) + "]";
+		m_audio->PauseMusic();
 	}
-	else if ((m_input->CT()->Added(_event)) || (m_input->CT()->Removed(_event)) || (m_input->CT()->ProcessButtons(m_sdlEvent)))
+	else if (m_input->KB()->KeyUp(_event, SDLK_d))
 	{
-		m_ctInfo = m_input->CT()->ToString();
+		m_audio->ResumeMusic();
+	}
+	else if (m_input->KB()->KeyUp(_event, SDLK_f))
+	{
+		m_audio->StopMusic();
 	}
 
 	m_input->MS()->ProcessButtons(_event);
@@ -82,12 +92,14 @@ void GameController::RunGame()
 			HandleInput(m_sdlEvent);
 		}
 
-		m_fArial20->Write(m_renderer->GetRenderer(), m_text.c_str(), SDL_Color{ 0,255,0 }, SDL_Point{ 250,200 });
-		m_fArial20->Write(m_renderer->GetRenderer(), m_smPos.c_str(), SDL_Color{ 0,0,255 }, SDL_Point{ 250,220 });
-		m_fArial20->Write(m_renderer->GetRenderer(),("Left: "+ to_string(m_input->MS()->GetButLDown())).c_str(), SDL_Color{0,0,255}, SDL_Point{250,240});
-		m_fArial20->Write(m_renderer->GetRenderer(), ("Middle: " + to_string(m_input->MS()->GetButMDown())).c_str(), SDL_Color{ 0,0,255 }, SDL_Point{ 250,260 });
-		m_fArial20->Write(m_renderer->GetRenderer(), ("Right: " + to_string(m_input->MS()->GetButRDown())).c_str(), SDL_Color{ 0,0,255 }, SDL_Point{ 250,280 });
-		m_fArial20->Write(m_renderer->GetRenderer(), m_ctInfo.c_str(), SDL_Color{255,0,0}, SDL_Point{250,300});
+		string song = "Current Song: " + m_audio->GetMusicTitle();
+		if (m_audio->GetMusicLength() != "")
+		{
+			song += " " + to_string((int)m_audio->MusicPosition()) + "/" + m_audio->GetMusicLength();
+		}
+		m_fArial20->Write(m_renderer->GetRenderer(), song.c_str(), { 0,0,255 }, { 10,10 });
+		m_fArial20->Write(m_renderer->GetRenderer(), ("Current Effect: " + m_audio->GetCurrentEffect()).c_str(), { 0, 0, 255 }, { 10, 30 });
+		
 		SDL_RenderPresent(m_renderer->GetRenderer());
 	}
 }	

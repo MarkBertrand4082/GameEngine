@@ -55,4 +55,22 @@ struct Rect
 	unsigned int Y2;
 };
 
+struct Position
+{
+	Position()
+	{
+		X = 0;
+		Y = 0;
+	}
+
+	Position(int _x, int _y)
+	{
+		X = _x;
+		Y = _y;
+	}
+
+	int X;
+	int Y;
+};
+
 #endif
