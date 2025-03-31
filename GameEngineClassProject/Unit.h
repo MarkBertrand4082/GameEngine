@@ -19,8 +19,8 @@ public:
 
 	static ObjectPool<Unit>* Pool;
 
+
 private:
-	glm::vec2 m_direction;
 	SoundEffect* m_soundEffect;
 	SpriteSheet* m_spriteSheet;
 };

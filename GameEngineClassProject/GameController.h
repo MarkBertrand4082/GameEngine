@@ -37,11 +37,11 @@ private:
 	WavDraw* m_wavDraw;
 	SoundEffect* m_effects[MaxEffectChannels];
 	Timing* m_timer;
-	float m_zoomY;
-	float m_playerX1;
-	float m_playerY1;
-	float m_playerX2;
-	float m_playerY2;
+	int m_zoomY;
+	int m_playerX1;
+	int m_playerY1;
+	int m_playerX2;
+	int m_playerY2;
 };
 
 #endif

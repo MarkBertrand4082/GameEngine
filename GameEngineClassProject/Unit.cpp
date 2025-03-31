@@ -6,7 +6,6 @@ Unit::Unit()
 {
 	m_soundEffect = nullptr;
 	m_spriteSheet = nullptr;
-	m_direction = { 0,0 };
 
 }
 
@@ -18,8 +17,12 @@ void Unit::AssignNonDefaultValues()
 {
 	m_soundEffect = SoundEffect::Pool->GetResource();
 	m_soundEffect->AssignNonDefaultValues();
+
+	m_spriteSheet = SpriteSheet::Pool->GetResource();
+	m_spriteSheet->Load("../Asset/Textures/Warrior.tga");
+	m_spriteSheet->SetSize(17, 6, 69, 44);
 	m_spriteSheet->AddAnimation(EN_AN_IDLE, 0, 6, 6.0f);
-	m_spriteSheet->AddAnimation(EN_AN_RUN, 0, 6, 6.0f);
+	m_spriteSheet->AddAnimation(EN_AN_RUN, 6, 8, 6.0f);
 	Resource::AssignNonDefaultValues();
 }
 
