@@ -2,6 +2,8 @@
 #define GAME_CONTROLLER_H
 
 #include "StandardIncludes.h"
+#include "AudioController.h"
+#include "Unit.h"
 
 class Renderer;
 class TTFont;
@@ -9,6 +11,8 @@ class InputController;
 class AudioController;
 class SoundEffect;
 class Song;
+class WavDraw;
+class Timing;
 
 class GameController : public Singleton<GameController>
 {
@@ -19,17 +23,25 @@ public:
 	void RunGame();
 	void Initialize();
 	void HandleInput(SDL_Event _event);
-	void ShutDown();
+	void ShutDown();		
 
 private:
+	Unit* m_player;
+	vector<Unit*> m_enemies;
 	SDL_Event m_sdlEvent;
 	Renderer* m_renderer;
 	TTFont* m_fArial20;
 	bool m_quit;
 	InputController* m_input;
 	AudioController* m_audio;
-	SoundEffect* m_effect;
-	Song* m_song;
+	WavDraw* m_wavDraw;
+	SoundEffect* m_effects[MaxEffectChannels];
+	Timing* m_timer;
+	float m_zoomY;
+	float m_playerX1;
+	float m_playerY1;
+	float m_playerX2;
+	float m_playerY2;
 };
 
 #endif

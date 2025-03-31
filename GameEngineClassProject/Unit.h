@@ -3,6 +3,7 @@
 
 #include "Resource.h"
 #include "SoundEffect.h"
+#include "SpriteSheet.h"
 
 class Unit : public Resource
 {
@@ -14,13 +15,14 @@ public:
 	void Deserialize(std::istream& _stream) override;
 	void ToString() override;
 	void AssignNonDefaultValues() override;
+	SpriteSheet* GetSheet() { return m_spriteSheet; }
 
-
-	//Member
 	static ObjectPool<Unit>* Pool;
 
 private:
+	glm::vec2 m_direction;
 	SoundEffect* m_soundEffect;
+	SpriteSheet* m_spriteSheet;
 };
 
 #endif

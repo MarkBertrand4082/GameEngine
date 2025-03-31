@@ -8,6 +8,8 @@
 #include "AudioController.h"
 #include "SoundEffect.h"
 #include "Song.h"
+#include "WavDraw.h"
+#include "Timing.h"
 
 
 GameController::GameController()
@@ -18,8 +20,15 @@ GameController::GameController()
 	m_quit = false;
 	m_input = nullptr;
 	m_audio = nullptr;
-	m_effect = nullptr;
-	m_song = nullptr;
+	m_wavDraw = nullptr;
+	m_player = nullptr;
+	m_timer = nullptr;
+	memset(m_effects, 0, sizeof(SoundEffect*) * MaxEffectChannels);
+	m_zoomY = 5;
+	m_playerX1 = 0.0;
+	m_playerY1 = 0.0;
+	m_playerX2 = 0.0;
+	m_playerY2 = 0.0;
 
 }
 
@@ -37,8 +46,11 @@ void GameController::Initialize()
 	m_fArial20 = new TTFont();
 	m_fArial20->Initialize(20);
 	m_audio = &AudioController::Instance();
-	m_effect = m_audio->LoadEffect("../Assets/Audio/Effects/Whoosh.wav");
-	m_song = m_audio->LoadSong("../Assets/Audio/Music/Track1.mp3");
+	m_effects[0] = m_audio->LoadEffect("../Assets/Audio/Effects/Whoosh.wav");
+	m_player = new Unit();
+	m_timer = &Timing::Instance();
+	
+
 }
 
 void GameController::ShutDown()
@@ -48,32 +60,38 @@ void GameController::ShutDown()
 
 void GameController::HandleInput(SDL_Event _event)
 {
-	string temp;
 	if ((_event.type == SDL_QUIT) || (m_input->KB()->KeyUp(_event, SDLK_ESCAPE)))
 	{
 		m_quit = true;
 	}
-	else if (m_input->KB()->KeyUp(_event, SDLK_p))
+	else if (m_input->KB()->KeyDown(_event, SDLK_UP))
 	{
-		m_audio->Play(m_effect);
+		m_renderer->RenderTexture(m_player->GetSheet(), m_player->GetSheet()->Update(EN_AN_RUN, m_timer->GetDeltaTime()), Rect(m_playerX1, m_playerY1, m_playerX2, m_playerY2));
+		m_playerY1 -= 10;
+		m_playerY2 -= 10;
 	}
-	else if (m_input->KB()->KeyUp(_event, SDLK_a))
+	else if (m_input->KB()->KeyDown(_event, SDLK_DOWN))
 	{
-		m_audio->Play(m_song);
+		m_renderer->RenderTexture(m_player->GetSheet(), m_player->GetSheet()->Update(EN_AN_RUN, m_timer->GetDeltaTime()), Rect(m_playerX1, m_playerY1, m_playerX2, m_playerY2));
+		m_playerY1 += 10;
+		m_playerY2 += 10;
 	}
-	else if (m_input->KB()->KeyUp(_event, SDLK_s))
+	else if (m_input->KB()->KeyDown(_event, SDLK_LEFT))
 	{
-		m_audio->PauseMusic();
+		m_renderer->RenderTexture(m_player->GetSheet(), m_player->GetSheet()->Update(EN_AN_RUN, m_timer->GetDeltaTime()), Rect(m_playerX1, m_playerY1, m_playerX2, m_playerY2));
+		m_playerX1 -= 10;
+		m_playerX2 -= 10;
 	}
-	else if (m_input->KB()->KeyUp(_event, SDLK_d))
+	else if (m_input->KB()->KeyDown(_event, SDLK_RIGHT))
 	{
-		m_audio->ResumeMusic();
+		m_renderer->RenderTexture(m_player->GetSheet(), m_player->GetSheet()->Update(EN_AN_RUN, m_timer->GetDeltaTime()), Rect(m_playerX1, m_playerY1, m_playerX2, m_playerY2));
+		m_playerX1 += 10;
+		m_playerX2 += 10;
 	}
-	else if (m_input->KB()->KeyUp(_event, SDLK_f))
+	else
 	{
-		m_audio->StopMusic();
+		m_renderer->RenderTexture(m_player->GetSheet(), m_player->GetSheet()->Update(EN_AN_IDLE, m_timer->GetDeltaTime()), Rect(m_playerX1, m_playerY1, m_playerX2, m_playerY2));
 	}
-
 	m_input->MS()->ProcessButtons(_event);
 }
 
@@ -81,9 +99,11 @@ void GameController::RunGame()
 {
 	Initialize();
 	m_input->CT()->DetectControllers();
+	
 		
 	while (!m_quit)
-	{	
+	{
+		m_timer->Tick();
 		m_renderer->SetDrawColor(Color(255, 255, 255, 255));
 		m_renderer->ClearScreen();
 
@@ -91,15 +111,10 @@ void GameController::RunGame()
 		{
 			HandleInput(m_sdlEvent);
 		}
-
-		string song = "Current Song: " + m_audio->GetMusicTitle();
-		if (m_audio->GetMusicLength() != "")
-		{
-			song += " " + to_string((int)m_audio->MusicPosition()) + "/" + m_audio->GetMusicLength();
-		}
-		m_fArial20->Write(m_renderer->GetRenderer(), song.c_str(), { 0,0,255 }, { 10,10 });
-		m_fArial20->Write(m_renderer->GetRenderer(), ("Current Effect: " + m_audio->GetCurrentEffect()).c_str(), { 0, 0, 255 }, { 10, 30 });
 		
 		SDL_RenderPresent(m_renderer->GetRenderer());
+
+		m_timer->CapFPS();
 	}
+
 }	
