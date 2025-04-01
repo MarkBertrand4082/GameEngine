@@ -26,9 +26,9 @@ GameController::GameController()
 	memset(m_effects, 0, sizeof(SoundEffect*) * MaxEffectChannels);
 	m_zoomY = 5;
 	m_playerX1 = 0;
-	m_playerY1 = 0;
-	m_playerX2 = 0;
-	m_playerY2 = 0;
+	m_playerY1 = 150;
+	m_playerX2 = 69*3;
+	m_playerY2 = 150 + 44 * 3;
 
 }
 
@@ -67,9 +67,35 @@ void GameController::HandleInput(SDL_Event _event)
 		m_quit = true;
 	}
 	
-	else
+	else if(m_input->KB()->KeyDown(_event, SDLK_UP))
 	{
-		m_renderer->RenderTexture(m_player->GetSheet(), m_player->GetSheet()->Update(EN_AN_IDLE, m_timer->GetDeltaTime()), Rect(0,0,60,60));
+		
+		m_playerY1 -= 1.25;
+		m_playerY2 -= 1.25;
+		m_player->SetMoving(true);
+	}
+	else if (m_input->KB()->KeyDown(_event, SDLK_DOWN))
+	{
+		m_playerY1 += 1.25;	
+		m_playerY2 += 1.25;
+		m_player->SetMoving(true);
+	}
+	else if (m_input->KB()->KeyDown(_event, SDLK_LEFT))
+	{
+		m_playerX1 -= 1.25;
+		m_playerX2 -= 1.25;
+		m_player->SetMoving(true);
+	}
+	else if (m_input->KB()->KeyDown(_event, SDLK_RIGHT))
+	{
+		m_playerX1 += 1.25;
+		m_playerX2 += 1.25;
+		m_player->SetMoving(true);
+		
+	}
+	else if (m_input->KB()->KeyUp(_event, SDLK_DOWN) || m_input->KB()->KeyUp(_event, SDLK_UP) || m_input->KB()->KeyUp(_event, SDLK_RIGHT) || m_input->KB()->KeyUp(_event, SDLK_LEFT))
+	{
+		m_player->SetMoving(false);
 	}
 	m_input->MS()->ProcessButtons(_event);
 }
@@ -85,10 +111,24 @@ void GameController::RunGame()
 		m_timer->Tick();
 		m_renderer->SetDrawColor(Color(255, 255, 255, 255));
 		m_renderer->ClearScreen();
+		
+		
+		m_player->Animate(m_timer->GetDeltaTime());
 
 		while (SDL_PollEvent(&m_sdlEvent) != 0)
 		{
 			HandleInput(m_sdlEvent);
+		}
+
+		if (m_player->GetMoving())
+		{
+			cout << "moving";
+			m_renderer->RenderTexture(m_player->GetSheet(), m_player->GetSheet()->Update(EN_AN_RUN, m_timer->GetDeltaTime()), Rect(m_playerX1, m_playerY1, m_playerX2, m_playerY2));
+		}
+		else if(SDL_PollEvent(&m_sdlEvent) == 0)
+		{
+			cout << "idle";
+			m_renderer->RenderTexture(m_player->GetSheet(), m_player->GetSheet()->Update(EN_AN_IDLE, m_timer->GetDeltaTime()), Rect(m_playerX1, m_playerY1, m_playerX2, m_playerY2));
 		}
 		
 		SDL_RenderPresent(m_renderer->GetRenderer());

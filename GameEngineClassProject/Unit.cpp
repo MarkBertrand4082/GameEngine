@@ -13,13 +13,22 @@ Unit::~Unit()
 {
 }
 
+void Unit::Animate(float _delta)
+{
+	m_spriteSheet->Update(EN_AN_RUN, _delta);
+}
+
 void Unit::AssignNonDefaultValues()
 {
 	m_soundEffect = SoundEffect::Pool->GetResource();
 	m_soundEffect->AssignNonDefaultValues();
 
+
+	SpriteSheet::Pool = new ObjectPool<SpriteSheet>();
+	SpriteAnim::Pool = new ObjectPool<SpriteAnim>();
+
 	m_spriteSheet = SpriteSheet::Pool->GetResource();
-	m_spriteSheet->Load("../Asset/Textures/Warrior.tga");
+	m_spriteSheet->Load("../Assets/Textures/Warrior.tga");
 	m_spriteSheet->SetSize(17, 6, 69, 44);
 	m_spriteSheet->AddAnimation(EN_AN_IDLE, 0, 6, 6.0f);
 	m_spriteSheet->AddAnimation(EN_AN_RUN, 6, 8, 6.0f);
