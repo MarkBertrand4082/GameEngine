@@ -11,7 +11,7 @@ class InputController;
 class AudioController;
 class SoundEffect;
 class Song;
-class WavDraw;
+class RenderTarget;
 class Timing;
 
 class GameController : public Singleton<GameController>
@@ -34,14 +34,14 @@ private:
 	bool m_quit;
 	InputController* m_input;
 	AudioController* m_audio;
-	WavDraw* m_wavDraw;
+	RenderTarget* m_rt;
 	SoundEffect* m_effects[MaxEffectChannels];
+	vector<Unit*> m_npcs;
 	Timing* m_timer;
-	int m_zoomY;
-	glm::vec2 left = { -1,0 };
-	glm::vec2 right = { 1,0 };
-	glm::vec2 up = { 0,-1};
-	glm::vec2 down = {0,1 };
+	glm::vec2 left = { -2,0 };
+	glm::vec2 right = { 2,0 };
+	glm::vec2 up = { 0,-2};
+	glm::vec2 down = {0,2 };
 	bool m_upHeld;
 	bool m_downHeld;
 	bool m_leftHeld;

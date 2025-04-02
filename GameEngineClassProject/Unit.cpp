@@ -9,6 +9,12 @@ Unit::Unit()
 	m_moving = false;
 	m_flip = false;
 	m_dir = { 0,0 };
+	m_loc = { 0,0 };
+	m_X1 = 0;
+	m_X2 = 0;
+	m_Y1 = 0;
+	m_Y2 = 0;
+	m_caught = false;
 }
 
 Unit::~Unit()
