@@ -68,8 +68,17 @@ void GameController::Initialize()
 
 	for (int i = 0; i < 10; i++)
 	{
+		int ran1 = rand() % 300 - 150;
+		int ran2 = rand() % 300 - 150;
+		glm::vec2 random = { (m_renderer->GetWindowSize().X / 2) + ran1, (m_renderer->GetWindowSize().Y / 2) + ran2 };
+
 		m_npcs.push_back(new Unit());
-		m_npcs[i]->SetLoc({});
+		m_npcs[i]->SetLoc(random);
+		m_npcs[i]->SetX1(random[0]);
+		m_npcs[i]->SetY1(random[1]);
+		m_npcs[i]->SetX2(random[0] + 69 * 1.25);
+		m_npcs[i]->SetY2(random[1] + 44 * 1.25);
+		m_npcs[i]->AssignNonDefaultValues();
 	}
 }
 
@@ -188,37 +197,13 @@ void GameController::RunGame()
 		m_player->SetX2(m_player->GetX2() + m_player->GetDir()[0]);
 		m_player->SetY1(m_player->GetY1() + m_player->GetDir()[1]);
 		m_player->SetY2(m_player->GetY2() + m_player->GetDir()[1]);
+		m_player->SetLoc(glm::vec2{ m_player->GetX1(), m_player->GetY1() });
 
-		
 
-		for (int i = 0; i < 10; i++) //This handles animations for the NPCs
-		{
-			
-			if (glm::distance(m_npcs[i]->GetLoc(), m_npcs[i]->GetLoc()) < 150)
-			{
-				cout << glm::distance(m_npcs[i]->GetLoc(), m_npcs[i]->GetLoc());
-			}
-
-			if (!m_npcs[i]->GetCaught())
-			{
-				if (m_npcs[i]->GetMoving())
-				{
-					m_renderer->RenderTexture(m_npcs[i]->GetSheet(), m_npcs[i]->GetSheet()->Update(EN_AN_RUN, m_timer->GetDeltaTime()), Rect(m_npcs[i]->GetX2(), m_npcs[i]->GetY1(), m_npcs[i]->GetX1(), m_npcs[i]->GetY2()));
-				}
-				else
-				{
-					m_renderer->RenderTexture(m_player->GetSheet(), m_npcs[i]->GetSheet()->Update(EN_AN_IDLE, m_timer->GetDeltaTime()), Rect(m_npcs[i]->GetX2(), m_npcs[i]->GetY1(), m_npcs[i]->GetX1(), m_npcs[i]->GetY2()));
-				}
-			}
-		}
-		//m_rt->Start();
-		//m_rt->Stop();
-		//m_renderer->SetDrawColor(Color(0, 0, 0, 50));
-		//m_renderer->ClearScreen();
-
+		//Player animation logic
 		if (m_player->GetMoving())
 		{
-			if (m_player->GetFlip())	
+			if (m_player->GetFlip())
 			{
 				m_renderer->RenderTexture(m_player->GetSheet(), m_player->GetSheet()->Update(EN_AN_RUN, m_timer->GetDeltaTime()), Rect(m_player->GetX2(), m_player->GetY1(), m_player->GetX1(), m_player->GetY2()));
 			}
@@ -226,24 +211,51 @@ void GameController::RunGame()
 			{
 				m_renderer->RenderTexture(m_player->GetSheet(), m_player->GetSheet()->Update(EN_AN_RUN, m_timer->GetDeltaTime()), Rect(m_player->GetX1(), m_player->GetY1(), m_player->GetX2(), m_player->GetY2()));
 			}
-			
+
 		}
-		else if(SDL_PollEvent(&m_sdlEvent) == 0)
+		else if (SDL_PollEvent(&m_sdlEvent) == 0)
 		{
 			m_player->SetMoving(false);
 			if (m_player->GetFlip()) {
 				m_renderer->RenderTexture(m_player->GetSheet(), m_player->GetSheet()->Update(EN_AN_IDLE, m_timer->GetDeltaTime()), Rect(m_player->GetX2(), m_player->GetY1(), m_player->GetX1(), m_player->GetY2()));
 			}
-			else 
+			else
 			{
 				m_renderer->RenderTexture(m_player->GetSheet(), m_player->GetSheet()->Update(EN_AN_IDLE, m_timer->GetDeltaTime()), Rect(m_player->GetX1(), m_player->GetY1(), m_player->GetX2(), m_player->GetY2()));
 			}
 		}
 
-		
-		
+		for (int i = 0; i < 10; i++) //This handles animations for the NPCs
+		{
+			if (!m_npcs[i]->GetCaught())
+			{
+				if (glm::distance(m_npcs[i]->GetLoc(), m_player->GetLoc()) < 150)
+				{
+					cout << "NPC" << i << " " << (glm::distance(m_npcs[i]->GetLoc(), m_player->GetLoc())) << endl;
+					glm::vec2 move = m_npcs[i]->GetLoc() - m_player->GetLoc();
+					m_npcs[i]->SetX1(m_npcs[i]->GetX1() + int(move[0]) % 2);
+					m_npcs[i]->SetY1(m_npcs[i]->GetY1() + int(move[1]) % 2);
+					m_npcs[i]->SetX2(m_npcs[i]->GetX2() + int(move[0]) % 2);
+					m_npcs[i]->SetY2(m_npcs[i]->GetY2() + int(move[1]) % 2);
+					
+					
+					m_npcs[i]->SetLoc(glm::vec2{ m_npcs[i]->GetX1(), m_npcs[i]->GetY1() });
+					m_renderer->RenderTexture(m_npcs[i]->GetSheet(), m_npcs[i]->GetSheet()->Update(EN_AN_RUN, m_timer->GetDeltaTime()), Rect(m_npcs[i]->GetX1(), m_npcs[i]->GetY1(), m_npcs[i]->GetX2(), m_npcs[i]->GetY2()));
+				}
+				else
+				{
+					
+					m_renderer->RenderTexture(m_npcs[i]->GetSheet(), m_npcs[i]->GetSheet()->Update(EN_AN_IDLE, m_timer->GetDeltaTime()), Rect(m_npcs[i]->GetX1(), m_npcs[i]->GetY1(), m_npcs[i]->GetX2(), m_npcs[i]->GetY2()));
+				}
+			}
+		}
 
-		m_rt->Render(m_timer->GetDeltaTime());
+		
+		//m_rt->Start();
+		//m_rt->Stop();
+		//m_renderer->SetDrawColor(Color(0, 0, 0, 50));
+		//m_renderer->ClearScreen();
+
 		
 		SDL_RenderPresent(m_renderer->GetRenderer());
 
