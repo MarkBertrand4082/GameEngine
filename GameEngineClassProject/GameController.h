@@ -38,10 +38,15 @@ private:
 	SoundEffect* m_effects[MaxEffectChannels];
 	Timing* m_timer;
 	int m_zoomY;
-	int m_playerX1;
-	int m_playerY1;
-	int m_playerX2;
-	int m_playerY2;
+	glm::vec2 left = { -1,0 };
+	glm::vec2 right = { 1,0 };
+	glm::vec2 up = { 0,-1};
+	glm::vec2 down = {0,1 };
+	bool m_upHeld;
+	bool m_downHeld;
+	bool m_leftHeld;
+	bool m_rightHeld;
+
 };
 
 #endif

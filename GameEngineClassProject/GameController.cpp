@@ -12,6 +12,7 @@
 #include "Timing.h"
 
 
+
 GameController::GameController()
 {
 	m_sdlEvent = {};
@@ -23,12 +24,12 @@ GameController::GameController()
 	m_wavDraw = nullptr;
 	m_player = nullptr;
 	m_timer = nullptr;
+	m_upHeld = false;
+	m_downHeld = false;
+	m_leftHeld = false;
+	m_rightHeld = false;
 	memset(m_effects, 0, sizeof(SoundEffect*) * MaxEffectChannels);
-	m_zoomY = 5;
-	m_playerX1 = 0;
-	m_playerY1 = 150;
-	m_playerX2 = 69*3;
-	m_playerY2 = 150 + 44 * 3;
+
 
 }
 
@@ -47,12 +48,17 @@ void GameController::Initialize()
 	m_timer = &Timing::Instance();
 	m_player->AssignNonDefaultValues();
 	
-	
 	m_renderer = &Renderer::Instance();
 	m_renderer->Initialize();
 	m_input = &InputController::Instance();
 	m_fArial20 = new TTFont();
 	m_fArial20->Initialize(20);
+	m_timer->SetFPS(80);
+
+	m_player->SetX1(m_renderer->GetWindowSize().X / 2);
+	m_player->SetY1(m_renderer->GetWindowSize().Y / 2);
+	m_player->SetX2((m_renderer->GetWindowSize().X / 2)+69*1.25);
+	m_player->SetY2((m_renderer->GetWindowSize().Y / 2)+44*1.25) ;
 }
 
 void GameController::ShutDown()
@@ -69,35 +75,80 @@ void GameController::HandleInput(SDL_Event _event)
 	
 	else if(m_input->KB()->KeyDown(_event, SDLK_UP))
 	{
-		
-		m_playerY1 -= 1.25;
-		m_playerY2 -= 1.25;
+		if (!m_upHeld)
+		{
+			m_player->SetDir(m_player->GetDir() + up);
+			m_upHeld = true;
+		}
 		m_player->SetMoving(true);
 	}
 	else if (m_input->KB()->KeyDown(_event, SDLK_DOWN))
 	{
-		m_playerY1 += 1.25;	
-		m_playerY2 += 1.25;
+		if (!m_downHeld)
+		{
+			m_player->SetDir(m_player->GetDir() + down);
+			m_downHeld = true;
+		}
 		m_player->SetMoving(true);
 	}
 	else if (m_input->KB()->KeyDown(_event, SDLK_LEFT))
 	{
-		m_playerX1 -= 1.25;
-		m_playerX2 -= 1.25;
+		if (!m_leftHeld)
+		{
+			m_player->SetDir(m_player->GetDir() + left);
+			m_leftHeld = true;
+		}
 		m_player->SetMoving(true);
+		m_player->SetFlip(true);
 	}
 	else if (m_input->KB()->KeyDown(_event, SDLK_RIGHT))
 	{
-		m_playerX1 += 1.25;
-		m_playerX2 += 1.25;
+		if (!m_rightHeld)
+		{
+			m_player->SetDir(m_player->GetDir() + right);
+			m_rightHeld = true;
+		}
 		m_player->SetMoving(true);
-		
+		m_player->SetFlip(false);
 	}
-	else if (m_input->KB()->KeyUp(_event, SDLK_DOWN) || m_input->KB()->KeyUp(_event, SDLK_UP) || m_input->KB()->KeyUp(_event, SDLK_RIGHT) || m_input->KB()->KeyUp(_event, SDLK_LEFT))
+
+	//This is to remove the movement from the vector when the key is raised
+	else if (m_input->KB()->KeyUp(_event, SDLK_UP))
 	{
+		if (m_upHeld)
+		{
+			m_upHeld = false;
+			m_player->SetDir(m_player->GetDir() - up);
+		}
 		m_player->SetMoving(false);
 	}
-	m_input->MS()->ProcessButtons(_event);
+	else if (m_input->KB()->KeyUp(_event, SDLK_DOWN))
+	{
+		if(m_downHeld)
+		{
+			m_downHeld = false;
+			m_player->SetDir(m_player->GetDir() - down);
+		}
+		m_player->SetMoving(false);
+	}
+	else if (m_input->KB()->KeyUp(_event, SDLK_LEFT))
+	{
+		if (m_leftHeld)
+		{
+			m_leftHeld = false;
+			m_player->SetDir(m_player->GetDir() - left);
+		}
+		m_player->SetMoving(false);
+	}
+	else if (m_input->KB()->KeyUp(_event, SDLK_RIGHT))
+	{
+		if (m_rightHeld)
+		{
+			m_rightHeld = false;
+			m_player->SetDir(m_player->GetDir() - right);
+		}
+		m_player->SetMoving(false);
+	}
 }
 
 void GameController::RunGame()
@@ -112,23 +163,34 @@ void GameController::RunGame()
 		m_renderer->SetDrawColor(Color(255, 255, 255, 255));
 		m_renderer->ClearScreen();
 		
-		
-		m_player->Animate(m_timer->GetDeltaTime());
 
 		while (SDL_PollEvent(&m_sdlEvent) != 0)
 		{
 			HandleInput(m_sdlEvent);
 		}
 
+		m_fArial20->Write(m_renderer->GetRenderer(), glm::to_string(m_player->GetDir()).c_str(), SDL_Color{ 0,255,0 }, SDL_Point{250,200});
+
+		m_player->SetX1(m_player->GetX1() + m_player->GetDir()[0]);
+		m_player->SetX2(m_player->GetX2() + m_player->GetDir()[0]);
+		m_player->SetY1(m_player->GetY1() + m_player->GetDir()[1]);
+		m_player->SetY2(m_player->GetY2() + m_player->GetDir()[1]);
+
 		if (m_player->GetMoving())
 		{
-			cout << "moving";
-			m_renderer->RenderTexture(m_player->GetSheet(), m_player->GetSheet()->Update(EN_AN_RUN, m_timer->GetDeltaTime()), Rect(m_playerX1, m_playerY1, m_playerX2, m_playerY2));
+			if (m_player->GetFlip())	
+			{
+				m_renderer->RenderTexture(m_player->GetSheet(), m_player->GetSheet()->Update(EN_AN_RUN, m_timer->GetDeltaTime()), Rect(m_player->GetX2() -34.5, m_player->GetY1(), m_player->GetX1() - 34.5, m_player->GetY2()));
+			}
+			else
+			{
+				m_renderer->RenderTexture(m_player->GetSheet(), m_player->GetSheet()->Update(EN_AN_RUN, m_timer->GetDeltaTime()), Rect(m_player->GetX1(), m_player->GetY1(), m_player->GetX2(), m_player->GetY2()));
+			}
+			
 		}
 		else if(SDL_PollEvent(&m_sdlEvent) == 0)
 		{
-			cout << "idle";
-			m_renderer->RenderTexture(m_player->GetSheet(), m_player->GetSheet()->Update(EN_AN_IDLE, m_timer->GetDeltaTime()), Rect(m_playerX1, m_playerY1, m_playerX2, m_playerY2));
+			m_renderer->RenderTexture(m_player->GetSheet(), m_player->GetSheet()->Update(EN_AN_IDLE, m_timer->GetDeltaTime()), Rect(m_player->GetX1(), m_player->GetY1(), m_player->GetX2(), m_player->GetY2()));
 		}
 		
 		SDL_RenderPresent(m_renderer->GetRenderer());

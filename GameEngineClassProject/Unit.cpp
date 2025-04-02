@@ -6,7 +6,9 @@ Unit::Unit()
 {
 	m_soundEffect = nullptr;
 	m_spriteSheet = nullptr;
-
+	m_moving = false;
+	m_flip = false;
+	m_dir = { 0,0 };
 }
 
 Unit::~Unit()
