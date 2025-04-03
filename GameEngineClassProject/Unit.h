@@ -39,6 +39,11 @@ public:
 
 	boolean GetCaught() { return m_caught; }
 	void SetCaught(boolean _caught) { m_caught = _caught; }
+	boolean GetDead() { return m_dead; }
+	void SetDead(boolean _dead) { m_dead = _dead; }
+
+	float GetSpeed() { return m_speed; }
+	void SetSpeed(float _speed) { m_speed = _speed; }
 
 	static ObjectPool<Unit>* Pool;
 
@@ -49,12 +54,14 @@ private:
 	boolean m_moving;
 	boolean m_flip;
 	boolean m_caught;
+	boolean m_dead;
 	int m_X1;
 	int m_Y1;
 	int m_X2;
 	int m_Y2;
 	glm::vec2 m_dir;
 	glm::vec2 m_loc;
+	float m_speed;
 };
 
 #endif
