@@ -8,7 +8,7 @@ class Particle : public RigidBody
 {
 public:
 	Particle();
-	virtual ~Particle();
+	virtual ~Particle() {}
 	
 	float GetLifeTime() { return m_lifeTime; }
 	void SetLifeTime(float _lifeTime) { m_lifeTime = _lifeTime; }

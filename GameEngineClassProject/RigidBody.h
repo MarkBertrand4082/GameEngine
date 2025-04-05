@@ -9,7 +9,7 @@ class RigidBody
 {
 public:
 	RigidBody();
-	virtual ~RigidBody();
+	virtual ~RigidBody() {}
 
 	glm::vec2& GetPosition() { return m_position; }
 	void SetPosition(glm::vec2 _position) { m_position = _position; }

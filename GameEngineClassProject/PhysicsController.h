@@ -10,7 +10,7 @@ class PhysicsController : public Singleton<PhysicsController>
 {
 public:
 	PhysicsController();
-	virtual ~PhysicsController();
+	virtual ~PhysicsController() {}
 
 	float GetGravity() { return m_gravity; }
 	void SetGravity(float _gravity) { m_gravity = _gravity; }
