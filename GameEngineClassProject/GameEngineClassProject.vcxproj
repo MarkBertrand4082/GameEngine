@@ -151,10 +151,13 @@ copy/Y "$(SolutionDir)External\SDL2_mixer-2.6.2\lib\x64\SDL2_mixer.dll" "$(Targe
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="NoCommandDemo.cpp" />
     <ClCompile Include="Observer.cpp" />
+    <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="PhysicsController.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="Song.cpp" />
     <ClCompile Include="SoundEffect.cpp" />
     <ClCompile Include="SpriteAnim.cpp" />
@@ -187,10 +190,13 @@ copy/Y "$(SolutionDir)External\SDL2_mixer-2.6.2\lib\x64\SDL2_mixer.dll" "$(Targe
     <ClInclude Include="NoCommandDemo.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="Observer.h" />
+    <ClInclude Include="Particle.h" />
     <ClInclude Include="Physics.h" />
+    <ClInclude Include="PhysicsController.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="RenderTarget.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Serializable.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Song.h" />
