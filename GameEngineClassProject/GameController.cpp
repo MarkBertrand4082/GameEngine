@@ -80,11 +80,11 @@ void GameController::RunGame()
 			m_renderer->RenderPoint(Point(p->GetPosition().x, p->GetPosition().y));
 		}
 		m_fArial20->Write(m_renderer->GetRenderer(), ("FPS: " + to_string(m_timing->GetFPS())).c_str(), SDL_Color{ 0,0,255 }, SDL_Point{ 10,10 });
-		m_fArial20->Write(m_renderer->GetRenderer(), m_physics->ToString().c_str(), SDL_Color{ 0,0,255 }, SDL_Point{ 120,19 });
+		m_fArial20->Write(m_renderer->GetRenderer(), m_physics->ToString().c_str(), SDL_Color{ 0,0,255 }, SDL_Point{ 120,10 });
 		
 		SDL_RenderPresent(m_renderer->GetRenderer());
 
-		m_timing->CapFPS();
+		//m_timing->CapFPS();
 	}
 
 }	
