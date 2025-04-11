@@ -8,6 +8,7 @@ class TTFont;
 class InputController;
 class Timing;
 class PhysicsController;
+class SpriteSheet;
 
 class GameController : public Singleton<GameController>
 {
@@ -28,6 +29,8 @@ private:
 	InputController* m_input;
 	Timing* m_timing;
 	PhysicsController* m_physics;
+	SpriteSheet* m_fire;
+	SpriteSheet* m_smoke;
 
 };
 
