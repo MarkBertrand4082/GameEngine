@@ -1,6 +1,6 @@
 #include "Particle.h"
 
-ObjectPool<Particle>* Particle::Pool = nullptr;
+ObjectPool<Particle>* Particle::Pool;
 
 Particle::Particle()
 {

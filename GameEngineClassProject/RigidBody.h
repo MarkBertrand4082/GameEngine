@@ -2,6 +2,7 @@
 #define RIGIDBODY_H
 
 #include <glm/glm.hpp>
+#include "ObjectPool.h"
 
 class Renderer;
 
