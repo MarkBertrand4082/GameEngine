@@ -64,24 +64,25 @@ void PhysicsController::Update(float _deltaTime)
 			p.y = 200;
 			b->SetPosition(p);
 			b->SetVelocity(glm::vec2{ 0,0 });
-	}
+		}
 
-	if (m_bodies.empty()) return;
-	for (int c1 = 0; c1 < m_bodies.size() - 1; c1++)
-	{
-		for (int c2 = c1 + 1; c2 < m_bodies.size(); c2++)
+		if (m_bodies.empty()) return;
+		for (int c1 = 0; c1 < m_bodies.size() - 1; c1++)
 		{
-			RigidBody* b1 = m_bodies[c1];
-			RigidBody* b2 = m_bodies[c2];
-			float dist = glm::distance(b1->GetPosition(), b2->GetPosition());
-			if (dist <= 32)
+			for (int c2 = c1 + 1; c2 < m_bodies.size(); c2++)
 			{
-				HandleCollision(b1, b2, dist);
-				do
+				RigidBody* b1 = m_bodies[c1];
+				RigidBody* b2 = m_bodies[c2];
+				float dist = glm::distance(b1->GetPosition(), b2->GetPosition());
+				if (dist <= 32)
 				{
-					b1->Update(_deltaTime, glm::vec2{ 0,0 });
-					b2->Update(_deltaTime, glm::vec2{ 0,0 });
-				} while (glm::distance(b1->GetPosition(), b2->GetPosition()) <= 32);
+					HandleCollision(b1, b2, dist);
+					do
+					{
+						b1->Update(_deltaTime, glm::vec2{ 0,0 });
+						b2->Update(_deltaTime, glm::vec2{ 0,0 });
+					} while (glm::distance(b1->GetPosition(), b2->GetPosition()) <= 32);
+				}
 			}
 		}
 	}

@@ -1,6 +1,6 @@
 #include "Level.h"
 
-Level::Level()
+Level::Level(Renderer& _r, AudioController& _a, PhysicsController& _p)
 {
 	AssetController::Instance().Initialize(10000000);
 	Unit::Pool = new ObjectPool<Unit>();

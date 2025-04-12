@@ -60,7 +60,7 @@ void JumpingState::Update(Heroine* _heroine, float _deltaTime)
 	if (_heroine->GetAnimations()->GetCurrentClip(EN_AN_JUMP_UP_FALL) >= 48.0f)
 	{
 
-		_heroine->GetRigidBody()->ResetCurrentClip(EN_AN_JUMP_UP_FALL);
+		_heroine->GetAnimations()->ResetCurrentClip(EN_AN_JUMP_UP_FALL);
 		_heroine->SetState(HeroineState::GetStandingState());
 	}
 }
@@ -75,7 +75,7 @@ void DivingState::Update(Heroine* _heroine, float _deltaTime)
 	if (_heroine->GetAnimations()->GetCurrentClip(EN_AN_CROUCH) >= 66.0f)
 	{
 		_heroine->GetRigidBody()->SetRandomForce(glm::vec2(0, 0));
-		_heroine->GetRigidBody()->ResetCurrentClip(EN_AN_CROUCH);
+		_heroine->GetAnimations()->ResetCurrentClip(EN_AN_CROUCH);
 		_heroine->SetState(HeroineState::GetStandingState());
 	}
 }
