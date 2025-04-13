@@ -14,6 +14,7 @@
 #include "RigidBody.h"
 #include "Unit.h"
 #include "SoundEffect.h"
+#include "Controller.h"
 
 Level2::Level2(Renderer* _r, AudioController* _a, PhysicsController* _p, InputController* _i, Timing* _t, TTFont* _font, string _n1, string _n2)
 {
@@ -93,6 +94,7 @@ void Level2::ToString()
 
 void Level2::Play()
 {
+	m_input->CT()->DetectControllers();
 	m_fist1 = new Unit();
 	m_fist1->AssignNonDefaultValues();
 	m_fist2 = new Unit();
@@ -135,6 +137,7 @@ void Level2::Play()
 		m_gameTime += m_timing->GetDeltaTime();
 		m_fArial20->Write(m_r->GetRenderer(), ("Frames Per Second: "+to_string(m_timing->GetFPS()) + "  Game Time: "+to_string(int(m_gameTime)) + "  Saves: " + to_string(m_saves) + "  Loads: "+to_string(m_loads)).c_str(), SDL_Color{0,0,255}, SDL_Point{0,1040});
 		m_fArial20->Write(m_r->GetRenderer(), "Quit [ESC]  Next Game State [SPACE]  Save [F5]  Load [F7]", SDL_Color{ 0,0,255 }, SDL_Point{ 0,1060 });
+		m_fArial20->Write(m_r->GetRenderer(), m_input->CT()->ToString().c_str(), SDL_Color{0,0,255}, SDL_Point{500,500});
 
 		SDL_RenderPresent(m_r->GetRenderer());
 
@@ -144,6 +147,7 @@ void Level2::Play()
 
 void Level2::HandleInput(SDL_Event _event)
 {
+	
 	string temp;
 	m_input->MS()->ProcessButtons(_event);
 	if ((_event.type == SDL_QUIT) || (m_input->KB()->KeyUp(_event, SDLK_ESCAPE)))
@@ -216,6 +220,13 @@ void Level2::HandleInput(SDL_Event _event)
 	}
 
 	//Controller
+	else if (m_input->CT()->ProcessMotion(_event))
+	{
+		m_fist1->GetHeroine()->GetRigidBody()->SetPosition({ m_fist1->GetHeroine()->GetRigidBody()->GetPosition().x += m_input->CT()->GetControllers()[0].LeftAxis.X%20, m_fist1->GetHeroine()->GetRigidBody()->GetPosition().y += m_input->CT()->GetControllers()[0].LeftAxis.Y%20 });
+		m_fist2->GetHeroine()->GetRigidBody()->SetPosition({ m_fist2->GetHeroine()->GetRigidBody()->GetPosition().x += m_input->CT()->GetControllers()[0].RightAxis.X%20, m_fist2->GetHeroine()->GetRigidBody()->GetPosition().y += m_input->CT()->GetControllers()[0].RightAxis.Y%20 });
+	}
+
+
 	m_fist1->GetHeroine()->HandleInput(_event, m_timing->GetDeltaTime());
 	m_fist2->GetHeroine()->HandleInput(_event, m_timing->GetDeltaTime());
 	

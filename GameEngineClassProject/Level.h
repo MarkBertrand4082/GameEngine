@@ -43,7 +43,6 @@ private:
 	string m_text2;
 	bool m_text1Done;
 	bool m_text2Done;
-	Song* m_song;
 	string m_error;
 	float m_timer;
 

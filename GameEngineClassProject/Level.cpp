@@ -16,8 +16,6 @@
 Level::Level(Renderer* _r, AudioController* _a, PhysicsController* _p, InputController* _i, Timing* _t, TTFont* _font)
 {
 	AssetController::Instance().Initialize(10000000);
-	Unit::Pool = new ObjectPool<Unit>();
-	SoundEffect::Pool = new ObjectPool<SoundEffect>();
 	m_sdlEvent = {};
 	m_r = _r;
 	m_a = _a;
@@ -29,9 +27,12 @@ Level::Level(Renderer* _r, AudioController* _a, PhysicsController* _p, InputCont
 	m_fArial40->Initialize(40);
 	m_text = "";
 	m_text1Done = false;
+	m_text2Done = false;
 	m_error = "";
 	m_timer = 0.0f;
 	m_gameTime = 0.0f;
+	m_quit = false;
+
 }
 
 Level::~Level()
@@ -42,28 +43,18 @@ Level::~Level()
 
 void Level::AssignNonDefaultValues()
 {
-
-
-	Resource::AssignNonDefaultValues();
 }
 
 void Level::Serialize(std::ostream& _stream)
 {
-
-	Resource::Serialize(_stream);
 }
 
 void Level::Deserialize(std::istream& _stream)
 {
-	
-	Resource::Deserialize(_stream);
 }
 
 void Level::ToString()
 {
-	cout << "LEVEL" << endl;
-	cout << "GameTime: " << m_gameTime << endl;
-	Resource::ToString();
 }
 
 void Level::Play()
