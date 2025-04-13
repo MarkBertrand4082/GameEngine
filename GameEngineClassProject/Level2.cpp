@@ -20,6 +20,7 @@ Level2::Level2(Renderer* _r, AudioController* _a, PhysicsController* _p, InputCo
 {
 	AssetController::Instance().Initialize(10000000);
 	SoundEffect::Pool = new ObjectPool<SoundEffect>();
+	Unit::Pool = new ObjectPool<Unit>();
 	m_sdlEvent = {};
 	m_r = _r;
 	m_a = _a;
@@ -42,6 +43,8 @@ Level2::Level2(Renderer* _r, AudioController* _a, PhysicsController* _p, InputCo
 
 Level2::~Level2()
 {
+	delete m_fist1;
+	delete m_fist2;
 	AssetController::Instance().Clear();
 }
 
@@ -137,7 +140,6 @@ void Level2::Play()
 		m_gameTime += m_timing->GetDeltaTime();
 		m_fArial20->Write(m_r->GetRenderer(), ("Frames Per Second: "+to_string(m_timing->GetFPS()) + "  Game Time: "+to_string(int(m_gameTime)) + "  Saves: " + to_string(m_saves) + "  Loads: "+to_string(m_loads)).c_str(), SDL_Color{0,0,255}, SDL_Point{0,1040});
 		m_fArial20->Write(m_r->GetRenderer(), "Quit [ESC]  Next Game State [SPACE]  Save [F5]  Load [F7]", SDL_Color{ 0,0,255 }, SDL_Point{ 0,1060 });
-		m_fArial20->Write(m_r->GetRenderer(), m_input->CT()->ToString().c_str(), SDL_Color{0,0,255}, SDL_Point{500,500});
 
 		SDL_RenderPresent(m_r->GetRenderer());
 
