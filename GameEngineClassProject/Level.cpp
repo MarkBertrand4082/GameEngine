@@ -71,7 +71,7 @@ void Level::ToString()
 
 void Level::Play()
 {
-	m_a->Play(m_a->LoadSong("../Assets/Audio/Music/Track1.mp3"));
+
 	Texture::Pool = new ObjectPool<Texture>();
 	Texture* texture = Texture::Pool->GetResource();
 	texture->Load("../Assets/Textures/Background.tga");
