@@ -9,6 +9,7 @@ class PhysicsController;
 class InputController;
 class Timing;
 class TTFont;
+class Heroine;
 
 class Level2 : public Resource
 {
@@ -34,6 +35,8 @@ private:
 	TTFont* m_fArial20;
 	string m_name1;
 	string m_name2;
+	Heroine* m_fist1;
+	Heroine* m_fist2;
 
 	//otehr interesting level members
 };

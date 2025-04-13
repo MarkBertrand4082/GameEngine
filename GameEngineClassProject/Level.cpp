@@ -29,7 +29,8 @@ Level::Level(Renderer* _r, AudioController* _a, PhysicsController* _p, InputCont
 	m_fArial40->Initialize(40);
 	m_text = "";
 	m_text1Done = false;
-
+	m_error = "";
+	m_timer = 0.0f;
 	m_gameTime = 0.0f;
 }
 
@@ -89,12 +90,22 @@ void Level::Play()
 		}
 		m_fArial40->Write(m_r->GetRenderer(), m_text.c_str(), SDL_Color{255,125,0}, SDL_Point{50,65});
 		m_fArial40->Write(m_r->GetRenderer(), m_text2.c_str(), SDL_Color{ 255,125,0 }, SDL_Point{ 50,210 });
+		m_fArial20->Write(m_r->GetRenderer(), m_error.c_str(), SDL_Color{ 255,0,0 }, SDL_Point{ 50,310 });
+		if (m_error.length() > 0)
+		{
+			m_timer += m_timing->GetDeltaTime();
+			if (m_timer > 1.0f)
+			{
+				m_error = "";
+				m_timer = 0.0f;
+			}
+		}
 		m_fArial20->Write(m_r->GetRenderer(), "Quit [ESC]  Next Nickname [RETURN]", SDL_Color{ 255,255,255 }, SDL_Point{ 0,1060 });
 		
 
 		SDL_RenderPresent(m_r->GetRenderer());
 
-		//m_timing->CapFPS();
+		m_timing->CapFPS();
 	}
 	delete texture;
 }
@@ -114,13 +125,9 @@ void Level::HandleInput(SDL_Event _event)
 		}
 		else if (m_input->KB()->KeyUp(m_sdlEvent, SDLK_RETURN))
 		{
-			if (m_text.length() == 0)
+			if (m_text.length() > 21 || m_text.length() == 0)
 			{
-				m_text = "No text entered";
-			}
-			else if (m_text.length() > 21)
-			{
-				m_text = "Text too long";
+				m_error = "Nickname must be 1 to 20 characters";
 			}
 			else
 			{
@@ -142,13 +149,10 @@ void Level::HandleInput(SDL_Event _event)
 		}
 		else if (m_input->KB()->KeyUp(m_sdlEvent, SDLK_RETURN))
 		{
-			if (m_text2.length() == 0)
+			if (m_text2.length() > 21 || m_text2.length() == 0)
 			{
-				m_text2 = "No text entered";
-			}
-			else if (m_text2.length() > 21)
-			{
-				m_text2 = "Text too long";
+				m_error = "Nickname must be 1 to 20 characters";
+
 			}
 			else
 			{

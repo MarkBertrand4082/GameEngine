@@ -28,6 +28,8 @@ Level2::Level2(Renderer* _r, AudioController* _a, PhysicsController* _p, InputCo
 	m_fArial20 = _font;
 	m_name1 = _n1;
 	m_name2 = _n2;
+	m_fist1 = nullptr;
+	m_fist2 = nullptr;
 }
 
 Level2::~Level2()
@@ -62,16 +64,12 @@ void Level2::ToString()
 void Level2::Play()
 {
 
-	Texture::Pool = new ObjectPool<Texture>();
-	Texture* texture = Texture::Pool->GetResource();
-	texture->Load("../Assets/Textures/Background.tga");
 	while (!m_quit)
 	{
 		m_timing->Tick();
 
 		m_r->SetDrawColor(Color{ 255,255,255,255 });
 		m_r->ClearScreen();
-		m_r->RenderTexture(texture, Point(0, 0));
 
 		while (SDL_PollEvent(&m_sdlEvent) != 0)
 		{
@@ -85,7 +83,6 @@ void Level2::Play()
 
 		//m_timing->CapFPS();
 	}
-	delete texture;
 }
 
 void Level2::HandleInput(SDL_Event _event)
