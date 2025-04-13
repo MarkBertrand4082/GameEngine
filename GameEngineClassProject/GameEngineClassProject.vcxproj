@@ -150,6 +150,7 @@ copy/Y "$(SolutionDir)External\SDL2_mixer-2.6.2\lib\x64\SDL2_mixer.dll" "$(Targe
     <ClCompile Include="InputController.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Level.cpp" />
+    <ClCompile Include="Level2.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="NoCommandDemo.cpp" />
     <ClCompile Include="Observer.cpp" />
@@ -190,6 +191,7 @@ copy/Y "$(SolutionDir)External\SDL2_mixer-2.6.2\lib\x64\SDL2_mixer.dll" "$(Targe
     <ClInclude Include="InputController.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="Level2.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="NoCommandDemo.h" />
     <ClInclude Include="ObjectPool.h" />

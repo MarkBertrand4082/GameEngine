@@ -9,6 +9,7 @@ class InputController;
 class Timing;
 class PhysicsController;
 class SpriteSheet;
+class AudioController;
 class Heroine;
 
 class GameController : public Singleton<GameController>
@@ -31,6 +32,7 @@ private:
 	Timing* m_timing;
 	PhysicsController* m_physics;
 	Heroine* m_heroine;
+	AudioController* m_audio;
 
 };
 

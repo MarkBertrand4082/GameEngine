@@ -11,6 +11,9 @@
 #include "Particle.h"
 #include "RigidBody.h"
 #include "Heroine.h"
+#include "Level.h"
+#include "Level2.h"
+#include "AudioController.h"
 
 
 
@@ -24,6 +27,7 @@ GameController::GameController()
 	m_timing = nullptr;
 	m_physics = nullptr;
 	m_heroine = nullptr;
+	m_audio = nullptr;
 }
 
 GameController::~GameController()
@@ -43,7 +47,7 @@ void GameController::Initialize()
 	m_fArial20->Initialize(20);
 	m_timing = &Timing::Instance();
 	m_physics = &PhysicsController::Instance();
-	m_heroine = new Heroine();
+	m_audio = &AudioController::Instance();
 }
 
 void GameController::ShutDown()
@@ -78,7 +82,6 @@ void GameController::HandleInput(SDL_Event _event)
 		m_quit = true;
 	}
 
-	m_heroine->HandleInput(_event, m_timing->GetDeltaTime());
 	m_input->MS()->ProcessButtons(_event);
 }
 
@@ -86,28 +89,19 @@ void GameController::RunGame()
 {
 	Initialize();
 		
-	while (!m_quit)
+	Level* level = new Level(m_renderer, m_audio, m_physics, m_input, m_timing, m_fArial20 );
+	level->Play();
+	
+	if (!level->GetQuit())
 	{
-		m_timing->Tick();
-		
-		m_renderer->SetDrawColor(Color(255, 255, 255, 255));
-		m_renderer->ClearScreen();
-		
-
-		while (SDL_PollEvent(&m_sdlEvent) != 0)
-		{
-			HandleInput(m_sdlEvent);
-		}
-
-		m_physics->Update(m_timing->GetDeltaTime());
-
-		m_heroine->Update(m_timing->GetDeltaTime());
-		m_heroine->Render(m_renderer);
-		
-		SDL_RenderPresent(m_renderer->GetRenderer());
-
-		//m_timing->CapFPS();
+		Level2* level2 = new Level2(m_renderer, m_audio, m_physics, m_input, m_timing, m_fArial20, level->GetText1(), level->GetText2());
+		level2->Play();
+		delete level2;
 	}
+
+	delete level;
+	
+
 	ShutDown();
 
 }	
