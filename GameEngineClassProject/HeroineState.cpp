@@ -5,77 +5,92 @@
 #include "SpriteSheet.h"
 
 
-StandingState HeroineState::m_standing;
-DuckingState HeroineState::m_ducking;
-JumpingState HeroineState::m_jumping;
-DivingState HeroineState::m_diving;
+IdleState HeroineState::m_idle;
+RollState HeroineState::m_roll;
+PaperState HeroineState::m_paper;
+ScissorsState HeroineState::m_scissors;
+RockState HeroineState::m_rock;
 
-void StandingState::HandleInput(Heroine* _heroine, SDL_Event _event)
+void IdleState::HandleInput(Heroine* _heroine, SDL_Event _event)
 {
-	if (InputController::Instance().KB()->KeyDown(_event, SDLK_b))
+	if (InputController::Instance().KB()->KeyDown(_event, SDLK_SPACE))
 	{
-		_heroine->GetRigidBody()->SetBuoyancy(glm::vec2(0, 100));
-		_heroine->GetRigidBody()->SetBuoyancyDecay(glm::vec2(0, 600));
-		_heroine->SetState(HeroineState::GetJumpingState());
+		_heroine->SetState(HeroineState::GetRollState());
 	}
-	else if (InputController::Instance().KB()->KeyDown(_event, SDLK_DOWN))
-	{
-		_heroine->SetState(HeroineState::GetDuckingState());
-	}
+
 }
 
-void StandingState::Update(Heroine* _heroine, float _deltaTime)
+void IdleState::Update(Heroine* _heroine, float _deltaTime)
 {
 	_heroine->GetAnimations()->Update(EN_AN_IDLE, _deltaTime, _heroine->GetSrcRect());
 }
 
 
-void DuckingState::HandleInput(Heroine* _heroine, SDL_Event _event)
+void RollState::HandleInput(Heroine* _heroine, SDL_Event _event)
 {
-	if (InputController::Instance().KB()->KeyDown(_event, SDLK_DOWN))
+	if (InputController::Instance().KB()->KeyDown(_event, SDLK_SPACE))
 	{
-		_heroine->GetAnimations()->ResetCurrentClip(EN_AN_CROUCH);
-		_heroine->SetState(HeroineState::GetStandingState());
+		int choice = rand() % 3;
+		switch (choice)
+		{
+		case 0:
+			_heroine->SetState(HeroineState::GetPaperState());
+			break;
+		case 1:
+			_heroine->SetState(HeroineState::GetScissorsState());
+			break;
+		case 2:
+			_heroine->SetState(HeroineState::GetRockState());
+			break;
+		}
 	}
 }
 
-void DuckingState::Update(Heroine* _heroine, float _deltaTime)
-{
-	_heroine->GetAnimations()->Update(EN_AN_CROUCH, _deltaTime, _heroine->GetSrcRect());
-}
-
-void JumpingState::HandleInput(Heroine* _heroine, SDL_Event _event)
-{
-	if (InputController::Instance().KB()->KeyDown(_event, SDLK_DOWN))
-	{
-		_heroine->GetRigidBody()->SetRandomForce(glm::vec2(0, -100));
-		_heroine->GetAnimations()->ResetCurrentClip(EN_AN_JUMP_UP_FALL);
-		_heroine->SetState(HeroineState::GetDivingState());
-	}
-}
-
-void JumpingState::Update(Heroine* _heroine, float _deltaTime)
+void RollState::Update(Heroine* _heroine, float _deltaTime)
 {
 	_heroine->GetAnimations()->Update(EN_AN_JUMP_UP_FALL, _deltaTime, _heroine->GetSrcRect());
-	if (_heroine->GetAnimations()->GetCurrentClip(EN_AN_JUMP_UP_FALL) >= 48.0f)
-	{
+}
 
-		_heroine->GetAnimations()->ResetCurrentClip(EN_AN_JUMP_UP_FALL);
-		_heroine->SetState(HeroineState::GetStandingState());
+void PaperState::HandleInput(Heroine* _heroine, SDL_Event _event)
+{
+	if (InputController::Instance().KB()->KeyDown(_event, SDLK_SPACE))
+	{
+		_heroine->GetAnimations()->ResetCurrentClip(EN_AN_CROUCH);
+		_heroine->SetState(HeroineState::GetIdleState());
 	}
 }
 
-void DivingState::HandleInput(Heroine* _heroine, SDL_Event _event)
-{
-}
-
-void DivingState::Update(Heroine* _heroine, float _deltaTime)
+void PaperState::Update(Heroine* _heroine, float _deltaTime)
 {
 	_heroine->GetAnimations()->Update(EN_AN_CROUCH, _deltaTime, _heroine->GetSrcRect());
-	if (_heroine->GetAnimations()->GetCurrentClip(EN_AN_CROUCH) >= 66.0f)
+	
+}
+
+void ScissorsState::HandleInput(Heroine* _heroine, SDL_Event _event)
+{
+	if (InputController::Instance().KB()->KeyDown(_event, SDLK_SPACE))
 	{
-		_heroine->GetRigidBody()->SetRandomForce(glm::vec2(0, 0));
-		_heroine->GetAnimations()->ResetCurrentClip(EN_AN_CROUCH);
-		_heroine->SetState(HeroineState::GetStandingState());
+		_heroine->GetAnimations()->ResetCurrentClip(EN_AN_RUN);
+		_heroine->SetState(HeroineState::GetIdleState());
 	}
+}
+
+void ScissorsState::Update(Heroine* _heroine, float _deltaTime)
+{
+	_heroine->GetAnimations()->Update(EN_AN_RUN, _deltaTime, _heroine->GetSrcRect());
+
+}
+
+void RockState::HandleInput(Heroine* _heroine, SDL_Event _event)
+{
+	if (InputController::Instance().KB()->KeyDown(_event, SDLK_SPACE))
+	{
+		_heroine->GetAnimations()->ResetCurrentClip(EN_AN_JUMP_UP_FALL);
+		_heroine->SetState(HeroineState::GetIdleState());
+	}
+}
+
+void RockState::Update(Heroine* _heroine, float _deltaTime)
+{
+	_heroine->GetAnimations()->Update(EN_AN_DEATH, _deltaTime, _heroine->GetSrcRect());
 }

@@ -4,10 +4,11 @@
 #include "StandardIncludes.h"
 
 class Heroine;
-class StandingState;
-class DuckingState;
-class JumpingState;
-class DivingState;
+class IdleState;
+class RollState;
+class PaperState;
+class ScissorsState;
+class RockState;
 
 class HeroineState
 {
@@ -15,55 +16,66 @@ public:
 	HeroineState() {}
 	virtual ~HeroineState() {}
 
-	static StandingState* GetStandingState() { return &m_standing; }
-	static DuckingState* GetDuckingState() { return &m_ducking; }
-	static JumpingState* GetJumpingState() { return &m_jumping; }
-	static DivingState* GetDivingState() { return &m_diving; }
+	static IdleState* GetIdleState() { return &m_idle; }
+	static RollState* GetRollState() { return &m_roll; }
+	static PaperState* GetPaperState() { return &m_paper; }
+	static ScissorsState* GetScissorsState() { return &m_scissors; }
+	static RockState* GetRockState() { return &m_rock; }
 
 	virtual void HandleInput(Heroine* _heroine, SDL_Event _event) = 0;
 	virtual void Update(Heroine* _heroine, float _deltaTime) = 0;
 
 private:
-	static StandingState m_standing;
-	static DuckingState m_ducking;
-	static JumpingState m_jumping;
-	static DivingState m_diving;
+	static IdleState m_idle;
+	static RollState m_roll;
+	static PaperState m_paper;
+	static ScissorsState m_scissors;
+	static RockState m_rock;
 };
 
-class StandingState : public HeroineState
+class IdleState : public HeroineState
 {
 public:
-	StandingState() {}
-	virtual ~StandingState() {}
+	IdleState() {}
+	virtual ~IdleState() {}
 
 	void HandleInput(Heroine* _heroine, SDL_Event _event) override;
 	void Update(Heroine* _heroine, float _deltaTime) override;
 };
 
-class DuckingState : public HeroineState
+class RollState : public HeroineState
 {
 public:
-	DuckingState() {}
-	virtual ~DuckingState() {}
+	RollState() {}
+	virtual ~RollState() {}
 
 	void HandleInput(Heroine* _heroine, SDL_Event _event) override;
 	void Update(Heroine* _heroine, float _deltaTime) override;;
 };
 
-class JumpingState : public HeroineState
+class PaperState : public HeroineState
 {
 public:
-	JumpingState() {}
-	virtual ~JumpingState() {}
+	PaperState() {}
+	virtual ~PaperState() {}
 	void HandleInput(Heroine* _heroine, SDL_Event _event) override;
 	void Update(Heroine* _heroine, float _deltaTime) override;;
 };
 
-class DivingState : public HeroineState
+class ScissorsState : public HeroineState
 {
 public:
-	DivingState() {}
-	virtual ~DivingState() {}
+	ScissorsState() {}
+	virtual ~ScissorsState() {}
+	void HandleInput(Heroine* _heroine, SDL_Event _event) override;
+	void Update(Heroine* _heroine, float _deltaTime) override;;
+};
+
+class RockState : public HeroineState
+{
+public:
+	RockState() {}
+	virtual ~RockState() {}
 	void HandleInput(Heroine* _heroine, SDL_Event _event) override;
 	void Update(Heroine* _heroine, float _deltaTime) override;;
 };

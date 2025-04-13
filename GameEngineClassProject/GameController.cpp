@@ -88,7 +88,7 @@ void GameController::HandleInput(SDL_Event _event)
 void GameController::RunGame()
 {
 	Initialize();
-		
+	m_timing->SetFPS(60);
 	Level* level = new Level(m_renderer, m_audio, m_physics, m_input, m_timing, m_fArial20 );
 	level->Play();
 	

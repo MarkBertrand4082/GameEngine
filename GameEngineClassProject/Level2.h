@@ -23,6 +23,7 @@ public:
 	void AssignNonDefaultValues() override;
 	void Play();
 	void HandleInput(SDL_Event _event);
+	void Win();
 
 private:
 	SDL_Event m_sdlEvent;
@@ -35,6 +36,10 @@ private:
 	TTFont* m_fArial20;
 	string m_name1;
 	string m_name2;
+	string m_state1;
+	string m_state2;
+	int m_wins1;
+	int m_wins2;
 	Heroine* m_fist1;
 	Heroine* m_fist2;
 
