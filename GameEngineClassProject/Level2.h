@@ -2,6 +2,7 @@
 #define LEVEL2_H
 
 #include "Unit.h"
+#include "AudioController.h"
 
 class Renderer;
 class AudioController;
@@ -48,7 +49,9 @@ private:
 	double m_gameTime;
 	int m_saves;
 	int m_loads;
-
+	SoundEffect* m_effects[2];
+	bool m_played;
+	bool m_played2;
 	//otehr interesting level members
 };
 #endif

@@ -61,7 +61,7 @@ void Level2::Serialize(std::ostream& _stream)
 	_stream.write(reinterpret_cast<char*>(&m_won1), sizeof(m_won1));
 	_stream.write(reinterpret_cast<char*>(&m_won2), sizeof(m_won2));
 	_stream.write(reinterpret_cast<char*>(&m_quit), sizeof(m_quit));
-	SerializePointer(_stream, m_a);
+
 	SerializePointer(_stream, m_fist1);
 	SerializePointer(_stream, m_fist2);
 
@@ -79,7 +79,6 @@ void Level2::Deserialize(std::istream& _stream)
 	_stream.read(reinterpret_cast<char*>(&m_won1), sizeof(m_won1));
 	_stream.read(reinterpret_cast<char*>(&m_won2), sizeof(m_won2));
 	_stream.read(reinterpret_cast<char*>(&m_quit), sizeof(m_quit));
-	DeserializePointer(_stream, m_a);
 	DeserializePointer(_stream, m_fist1);
 	DeserializePointer(_stream, m_fist2);
 
@@ -100,6 +99,8 @@ void Level2::Play()
 	m_fist2->AssignNonDefaultValues();
 	m_fist1->GetHeroine()->GetRigidBody()->SetPosition(glm::vec2{ 20,30});
 	m_fist2->GetHeroine()->GetRigidBody()->SetPosition(glm::vec2{ 20,330});
+	Song* song = m_a->LoadSong("../Assets/Audio/Music/Track1.mp3");
+	m_a->Play(song);
 
 	
 	while (!m_quit)

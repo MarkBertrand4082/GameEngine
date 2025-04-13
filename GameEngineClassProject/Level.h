@@ -2,9 +2,9 @@
 #define LEVEL_H
 
 #include "Unit.h"
+#include "AudioController.h"
 
 class Renderer;
-class AudioController;
 class PhysicsController;
 class InputController;
 class Timing;

@@ -42,7 +42,6 @@ Level::~Level()
 
 void Level::AssignNonDefaultValues()
 {
-	m_gameTime = 101.5f;
 
 
 	Resource::AssignNonDefaultValues();
@@ -69,7 +68,7 @@ void Level::ToString()
 
 void Level::Play()
 {
-
+	
 	Texture::Pool = new ObjectPool<Texture>();
 	Texture* texture = Texture::Pool->GetResource();
 	texture->Load("../Assets/Textures/Background.tga");
