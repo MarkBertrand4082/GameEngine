@@ -10,10 +10,10 @@ RigidBody::RigidBody()
 void RigidBody::Reset()
 {
 	m_position = {};
-	m_velocity = {};
-	m_acceleration = {};
-	m_buoyancy = {};
-	m_buoyancyDecay = {};
+	m_velocity = {0,0};
+	m_acceleration = {0,0};
+	m_buoyancy = {0,0};
+	m_buoyancyDecay = {0,0};
 	m_buoyancyMin = { 0,0 };
 	m_randomForce = { 0,0 };
 	m_wind = {};

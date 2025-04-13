@@ -50,15 +50,12 @@ void Level::AssignNonDefaultValues()
 
 void Level::Serialize(std::ostream& _stream)
 {
-	_stream.write(reinterpret_cast<char*>(&m_gameTime), sizeof(m_gameTime));
-	
 
 	Resource::Serialize(_stream);
 }
 
 void Level::Deserialize(std::istream& _stream)
 {
-	_stream.read(reinterpret_cast<char*>(&m_gameTime), sizeof(m_gameTime));
 	
 	Resource::Deserialize(_stream);
 }

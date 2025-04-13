@@ -58,11 +58,25 @@ void PhysicsController::Update(float _deltaTime)
 		RigidBody* b = m_bodies[count];
 		m_force.y = m_gravity;
 		b->Update(_deltaTime, m_force);
-		if (b->GetPosition().y >= 200)
+
+		if (b->GetPosition().y >= p.Y-170)
 		{
-			glm::vec2 p = b->GetPosition();
-			p.y = 200;
-			b->SetPosition(p);
+			b->SetPosition({b->GetPosition().x,p.Y-170});
+			b->SetVelocity(glm::vec2{ 0,0 });
+		}
+		else if (b->GetPosition().x >= p.X - 280)
+		{
+			b->SetPosition({p.X-280,b->GetPosition().y});
+			b->SetVelocity(glm::vec2{ 0,0 });
+		}
+		else if (b->GetPosition().y <= 0)
+		{
+			b->SetPosition({ b->GetPosition().x,0 });
+			b->SetVelocity(glm::vec2{ 0,0 });
+		}
+		else if (b->GetPosition().x <= 0)
+		{
+			b->SetPosition({0,b->GetPosition().y});
 			b->SetVelocity(glm::vec2{ 0,0 });
 		}
 
@@ -74,14 +88,14 @@ void PhysicsController::Update(float _deltaTime)
 				RigidBody* b1 = m_bodies[c1];
 				RigidBody* b2 = m_bodies[c2];
 				float dist = glm::distance(b1->GetPosition(), b2->GetPosition());
-				if (dist <= 32)
+				if (dist <= 280)
 				{
-					HandleCollision(b1, b2, dist);
-					do
-					{
-						b1->Update(_deltaTime, glm::vec2{ 0,0 });
-						b2->Update(_deltaTime, glm::vec2{ 0,0 });
-					} while (glm::distance(b1->GetPosition(), b2->GetPosition()) <= 32);
+					//HandleCollision(b1, b2, dist);
+					//do
+					//{
+						//b1->Update(_deltaTime, glm::vec2{ 0,0 });
+						//b2->Update(_deltaTime, glm::vec2{ 0,0 });
+					//} while (glm::distance(b1->GetPosition(), b2->GetPosition()) <= 260);
 				}
 			}
 		}

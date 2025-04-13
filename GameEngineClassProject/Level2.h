@@ -40,8 +40,14 @@ private:
 	string m_state2;
 	int m_wins1;
 	int m_wins2;
-	Heroine* m_fist1;
-	Heroine* m_fist2;
+	Unit* m_fist1;
+	Unit* m_fist2;
+	bool m_won1;
+	bool m_won2;
+	Point m_mPos;
+	double m_gameTime;
+	int m_saves;
+	int m_loads;
 
 	//otehr interesting level members
 };
