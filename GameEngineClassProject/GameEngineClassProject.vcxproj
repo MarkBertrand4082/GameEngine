@@ -104,11 +104,19 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)External\SDL2-2.26.1\include;$(SolutionDir)External\SDL2_mixer-2.6.2\include;$(SolutionDir)External;$(SolutionDir)External\SDL2_ttf-2.24.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)External\SDL2_mixer-2.6.2\lib\x64;$(SolutionDir)External\SDL2-2.26.1\lib\x64;$(SolutionDir)External\SDL2_ttf-2.24.0\lib\x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>copy/Y "$(SolutionDir)External\SDL2-2.26.1\lib\x64\SDL2.dll" "$(TargetDir)"
+copy/Y "$(SolutionDir)External\SDL2_ttf-2.24.0\lib\x64\SDL2_ttf.dll" "$(TargetDir)"
+copy/Y "$(SolutionDir)External\SDL2_mixer-2.6.2\lib\x64\SDL2_mixer.dll" "$(TargetDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -127,11 +135,90 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Asset.cpp" />
+    <ClCompile Include="AssetController.cpp" />
+    <ClCompile Include="AudioController.cpp" />
+    <ClCompile Include="Command.cpp" />
+    <ClCompile Include="CommandDemo.cpp" />
+    <ClCompile Include="CommandMoveUnit.cpp" />
+    <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="FileController.cpp" />
+    <ClCompile Include="GameController.cpp" />
     <ClCompile Include="GameEngineClassProject.cpp" />
+    <ClCompile Include="Heroine.cpp" />
+    <ClCompile Include="HeroineState.cpp" />
+    <ClCompile Include="InputController.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="Level2.cpp" />
+    <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="NoCommandDemo.cpp" />
+    <ClCompile Include="Observer.cpp" />
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="PhysicsController.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="RenderTarget.cpp" />
+    <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="Song.cpp" />
+    <ClCompile Include="SoundEffect.cpp" />
+    <ClCompile Include="SpriteAnim.cpp" />
+    <ClCompile Include="SpriteSheet.cpp" />
+    <ClCompile Include="StackAllocator.cpp" />
+    <ClCompile Include="Subject.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TGAReader.cpp" />
+    <ClCompile Include="ThreadTest.cpp" />
+    <ClCompile Include="Timing.cpp" />
+    <ClCompile Include="TTFont.cpp" />
+    <ClCompile Include="Unit.cpp" />
+    <ClCompile Include="WavDraw.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Asset.h" />
+    <ClInclude Include="AssetController.h" />
+    <ClInclude Include="AudioController.h" />
+    <ClInclude Include="BasicStructs.h" />
+    <ClInclude Include="Command.h" />
+    <ClInclude Include="CommandDemo.h" />
+    <ClInclude Include="CommandMoveUnit.h" />
+    <ClInclude Include="Controller.h" />
+    <ClInclude Include="FileController.h" />
+    <ClInclude Include="GameController.h" />
+    <ClInclude Include="Heroine.h" />
+    <ClInclude Include="HeroineState.h" />
+    <ClInclude Include="InputController.h" />
+    <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="Level2.h" />
+    <ClInclude Include="Mouse.h" />
     <ClInclude Include="NoCommandDemo.h" />
+    <ClInclude Include="ObjectPool.h" />
+    <ClInclude Include="Observer.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="Physics.h" />
+    <ClInclude Include="PhysicsController.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="RenderTarget.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="RigidBody.h" />
+    <ClInclude Include="Serializable.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Song.h" />
+    <ClInclude Include="SoundEffect.h" />
+    <ClInclude Include="SpriteAnim.h" />
+    <ClInclude Include="SpriteSheet.h" />
+    <ClInclude Include="StackAllocator.h" />
+    <ClInclude Include="StandardIncludes.h" />
+    <ClInclude Include="Subject.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="TGAReader.h" />
+    <ClInclude Include="ThreadTest.h" />
+    <ClInclude Include="Timing.h" />
+    <ClInclude Include="TTFont.h" />
+    <ClInclude Include="Unit.h" />
+    <ClInclude Include="WavDraw.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>User Information<br/></h1>
+
+    <form th:action="@{/orderPizza}" th:object="${order}"
+          method="post">
+        <label for="firstName">First Name:</label><br>
+        <input type="text" id="firstName" name="firstName" value="a" th:field="*{firstName}" ><br>
+        <label for="lastName">Last Name:</label><br>
+        <input type="text" id="lastName" name="lastName" value="a" th:field="*{lastName}" ><br>
+        <label for="phoneNum">Phone Number:</label><br>
+        <input type="text" id="phoneNum" name="phoneNum" value="0" th:field="*{phoneNum}" ><br>
+        <label for="address">Address:</label><br>
+        <input type="text" id="address" name="address" value="65 stockman" th:field="*{address}" ><br>
+
+        <h1>Order Information</h1>
+        <div>
+            <h2>Pizza Size:</h2>
+            <label for="size1">Small($10)</label><br>
+            <input type="radio" id="size1" name="size1" value="10" th:field="*{size}" ><br>
+            <label for="size2">Medium($13)</label><br>
+            <input type="radio" id="size2" name="size2" value="13" th:field="*{size}" ><br>
+            <label for="size3">Large($17)</label><br>
+            <input type="radio" id="size3" name="size3" value="17" th:field="*{size}" ><br>
+        </div>
+
+        <div>
+            <h2>Toppings:</h2>
+            <label for="topping1">Pepperoni</label><br>
+            <input type="checkbox" id="topping1" name="toppings" value="Pepperoni" th:field="*{toppings}" ><br>
+
+            <label for="topping2">Mushrooms</label><br>
+            <input type="checkbox" id="topping2" name="toppings" value="Mushrooms" th:field="*{toppings}" ><br>
+
+            <label for="topping3">Peppers</label><br>
+            <input type="checkbox" id="topping3" name="toppings" value="Peppers" th:field="*{toppings}" ><br>
+
+            <label for="topping4">Extra Cheese</label><br>
+            <input type="checkbox" id="topping4" name="toppings" value="Extra Cheese" th:field="*{toppings}" ><br>
+
+            <label for="topping5">Olives</label><br>
+            <input type="checkbox" id="topping5" name="toppings" value="Olives" th:field="*{toppings}" ><br>
+        </div>
+
+        <label for="pizzaQuant"># of Pizzas:</label><br>
+        <input type="text" id="pizzaQuant" name="pizzaQuant" value="28" th:field="*{pizzaQuant}" ><br>
+
+        <label for="orderType">Order Type:</label><br>
+        <select name="orderType" id="orderType">
+            <option value="delivery">Delivery</option>
+            <option value="pickup">Pick Up</option>
+        </select>
+
+        <input type="submit" value="Order Pizza"/>
+    </form>
+</body>
+</html>
